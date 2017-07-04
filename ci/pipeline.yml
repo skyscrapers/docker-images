@@ -42,10 +42,12 @@ jobs:
           args:
             - -c
             - |
+              set -e
               concourse web --version > output/version
+              echo "Building image for concourse version `cat output/version`"
     - put: skyscrapers-concourse-image
       params:
         build: docker-concourse-git
-        load: concourse-concourse-image
+        load_base: concourse-concourse-image
         tag: output/version
         tag_as_latest: true
