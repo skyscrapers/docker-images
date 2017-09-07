@@ -1,4 +1,9 @@
 FROM ruby:2.4.1-alpine3.6
+ARG PACKER_VERSION
+
+RUN \
+# Check for mandatory build arguments
+    : "${PACKER_VERSION:?PACKER_VERSION needs to be set and non-empty. See README.md}"
 
 RUN set -ex \
 	\
@@ -6,6 +11,7 @@ RUN set -ex \
         bash \
         gcc \
         git \
+        jq \
         libc-dev \
         make \
 		openssh \
@@ -13,10 +19,6 @@ RUN set -ex \
         ruby-dev \
         wget \
     && gem install json r10k --no-ri --no-rdoc
-
-# Adding Packer. Copied from https://github.com/hashicorp/docker-hub-images/blob/master/packer/Dockerfile-light
-ENV PACKER_VERSION=1.0.4
-ENV PACKER_SHA256SUM=0e10169ef9cf3fd55dcc9dc213b9995170f7712e8a162ca2f5109d62bfbe7529
 
 RUN set -ex \
     && wget --quiet https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip \

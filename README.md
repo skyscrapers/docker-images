@@ -24,3 +24,9 @@ This is a Docker image containing the following tools:
 All these tools are used to succesfully build AWS images for the Skyscrapers customers.
 The Racker tool is used to deep merge a generic (Ruby) template with 
 customer specific extensions before generating a JSON Packer template.
+
+To build this image, a build argument is required:
+* `PACKER_VERSION`
+
+You can specify it in a manual build like this:
+`$ docker build --build-arg PACKER_VERSION=1.0.4 -t skyscrapers/packer:1.0.4 .`
