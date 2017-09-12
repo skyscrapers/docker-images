@@ -18,7 +18,7 @@ RUN set -ex \
 		openssl \
         ruby-dev \
         wget \
-    && gem install json r10k --no-ri --no-rdoc
+    && gem install json r10k racker --no-ri --no-rdoc
 
 RUN set -ex \
     && wget --quiet https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip \
