@@ -1,6 +1,6 @@
 FROM  alpine:latest
 
-ENV ETCD_DATA_DIR=/etcd
+ENV ETCD_DATA_DIR=/var/etcd/data
 ENV ETCD_BACKUP_DIR=/backups
 ENV KOPS_STATE_BUCKET=''
 ENV K8S_CLUSTER_NAME=''
@@ -13,4 +13,4 @@ RUN apk -Uuv add python py-pip && \
     apk --purge -v del py-pip && \
     rm /var/cache/apk/*
 
-ENTRYPOINT ["/usr/bin/etcd2-backup.sh"]
+CMD /usr/bin/etcd2-backup.sh
