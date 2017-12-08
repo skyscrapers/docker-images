@@ -1,6 +1,6 @@
 FROM python:3
 
-ADD entrypoint.sh /opt/entrypoint.sh
+COPY entrypoint.sh /opt/entrypoint.sh
 
 RUN apt-get update && \
     apt-get install -y git && \
@@ -9,5 +9,7 @@ RUN apt-get update && \
     pip install -r requirements/base.txt && \
     chmod +x /opt/entrypoint.sh
 
-ENTRYPOINT [ "/opt/entrypoint.sh" ]
+COPY settings_local.py /opt/zenhub-charts/zenhub_charts/settings_local.py
+COPY credentials.py /opt/zenhub-charts/zenhub_charts/credentials.py
 
+ENTRYPOINT [ "/opt/entrypoint.sh" ]
