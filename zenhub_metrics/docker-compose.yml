@@ -1,0 +1,31 @@
+version: '3'
+services:
+  redis:
+    image: redis:4.0.6
+  postgres:
+    build: db
+    volumes:
+        - ./db/data:/var/lib/postgresql/data
+    ports:
+     - "5432:5432"
+  web:
+    build: .
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      GITHUB_TOKEN: <gh-token-here>
+      GITHUB_USER: skyscrapers
+      ZENHUB_TOKEN: <zenhub-token-here>
+      DB_HOST: postgres
+      DB_USER: zenhub_user
+      DB_PASSWORD: zenhub_db_pwd
+      DB_BACKEND: postgresql
+      DB_PORT: 5432
+      REDIS_HOST: redis
+      REPOS_LIST: "puppet"
+    ports:
+    - "8080:8080"
+    links:
+    - redis
+    - postgres
