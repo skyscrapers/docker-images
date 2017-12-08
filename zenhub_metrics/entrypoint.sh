@@ -5,9 +5,6 @@ set -e
 cd /opt/zenhub-charts
 echo  "GITHUB = {'token': '$GITHUB_TOKEN', 'owner': '$GITHUB_USER'}" >> zenhub_charts/credentials.py 
 echo  "ZENHUB = {'token': '$ZENHUB_TOKEN'}" >> zenhub_charts/credentials.py
-sed -i -e 's/md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
-service postgresql start
-service redis-server start
 ./manage.py migrate
 sed -i -e "s/DEBUG = False/DEBUG = True/" zenhub_charts/settings.py
 # automate mapping unknown pipelines to Closed
