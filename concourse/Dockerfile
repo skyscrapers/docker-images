@@ -1,7 +1,7 @@
 FROM concourse/concourse
 
 # This is the release of Vault to pull in.
-ENV VAULT_VERSION=0.9.0
+ARG VAULT_VERSION=0.9.0
 
 ADD entrypoint.sh /opt/entrypoint.sh
 
@@ -18,6 +18,6 @@ RUN apt-get update && \
     curl -s "https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_SHA256SUMS.sig" -o "vault_${VAULT_VERSION}_SHA256SUMS.sig" && \
     gpg --batch --verify vault_${VAULT_VERSION}_SHA256SUMS.sig vault_${VAULT_VERSION}_SHA256SUMS && \
     grep vault_${VAULT_VERSION}_linux_amd64.zip vault_${VAULT_VERSION}_SHA256SUMS | sha256sum -c && \
-    unzip -d /bin vault_${VAULT_VERSION}_linux_amd64.zip && \
+    unzip -d /bin vault_${VAULT_VERSION}_linux_amd64.zip
 
 ENTRYPOINT [ "/opt/entrypoint.sh" ]
