@@ -8,6 +8,8 @@ image_resource:
 inputs:
   - name: teleport-release
   - name: docker-teleport
+outputs:
+  - name: outputs
 run:
   path: sh
   args:
@@ -15,4 +17,5 @@ run:
   - |
     VERSION=$(cat teleport-release/version)
     tar -xzf teleport-release/teleport-v$VERSION-linux-amd64-bin.tar.gz
-    mv teleport docker-teleport/teleport/teleport
+    mv teleport outputs/teleport
+    cp docker-teleport/teleport/Dockerfile outputs/Dockerfile
