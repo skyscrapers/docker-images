@@ -30,3 +30,9 @@ To build this image, a build argument is required:
 
 You can specify it in a manual build like this:
 `$ docker build --build-arg PACKER_VERSION=1.0.4 -t skyscrapers/packer:1.0.4 .`
+
+## Teleport
+
+This is a Docker image for [Teleport](https://gravitational.com/teleport/)
+
+This will build a Teleport image from the Debian base image. This Dockerfile expects the released Teleport binaries in `teleport/teleport` folder.
