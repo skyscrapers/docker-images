@@ -14,5 +14,5 @@ run:
   - -exc
   - |
     VERSION=$(cat teleport-release/version)
-    tar -xzf teleport-release/teleport-$VERSION-linux-amd64-bin.tar.gz
+    tar -xzf teleport-release/teleport-v$VERSION-linux-amd64-bin.tar.gz
     mv teleport-release/teleport docker-teleport/teleport
