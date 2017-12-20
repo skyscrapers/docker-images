@@ -12,4 +12,6 @@ RUN apt-get update && \
 COPY settings_local.py /opt/zenhub-charts/zenhub_charts/settings_local.py
 COPY credentials.py /opt/zenhub-charts/zenhub_charts/credentials.py
 
+EXPOSE 8080
+
 ENTRYPOINT [ "/opt/entrypoint.sh" ]
