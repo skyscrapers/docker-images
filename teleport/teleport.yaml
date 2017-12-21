@@ -66,7 +66,7 @@ auth_service:
   #
   # IMPORTANT: if you change cluster_name, it will invalidate all generated
   # certificates and keys (may need to wipe out /var/lib/teleport directory)
-  ${CLUSTER_NAME}
+  cluster_name: ${CLUSTER_NAME}
 
 # This section configures the 'node service':
 ssh_service:
