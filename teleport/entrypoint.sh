@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
  
 if [ ! -z ${DYNAMODB_REGION} ];
     export DYNAMODB_REGION=eu-west-1
