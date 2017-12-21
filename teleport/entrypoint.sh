@@ -1,5 +1,20 @@
 #!/bin/bash
 
+if [ -z "${CLUSTER_NAME}" -a "${ENABLE_AUTH}" == "yes" ]; then
+  echo 'ERROR please fill in the $CLUSTER_NAME environment variable'
+  exit 1
+fi
+
+if [ -z "${DYNAMODB_TABLE}" -a "${ENABLE_AUTH}" == "yes" ]; then
+  echo 'ERROR please fill in the $DYNAMODB_TABLE environment variable'
+  exit 1
+fi
+
+if [ -z "${AUTH_SERVERS}" -a "${ENABLE_PROXY}" == "yes" ]; then
+  echo 'ERROR please provide at least one auth server in the $AUTH_SERVERS environment variable'
+  exit 1
+fi
+
 if [ -z "${DYNAMODB_REGION}" ]; then
   export DYNAMODB_REGION=eu-west-1
 fi
@@ -24,10 +39,6 @@ if [ ! -z "${TOKENS}" ]; then
 fi
 export TOKENS_
 
-if [ ! -z "${CLUSTER_NAME}" ]; then
-  export CLUSTER_NAME="cluster_name: \"${CLUSTER_NAME}\""
-fi
-
 AUTH_SERVERS_=""
 if [ ! -z "${AUTH_SERVERS}" ]; then
   AUTH_SERVERS_="auth_servers:
@@ -37,16 +48,8 @@ if [ ! -z "${AUTH_SERVERS}" ]; then
     AUTH_SERVERS_="${AUTH_SERVERS_}    - ${a}
 "
   done
-elif [ "${ENABLE_PROXY}" == "yes" ]; then
-  echo 'ERROR please provide at least one auth server in the $AUTH_SERVERS environment variable'
-  exit 1
 fi
 export AUTH_SERVERS_
-
-if [ -z "${DYNAMODB_TABLE}" -a "${ENABLE_AUTH}" == "yes" ]; then
-  echo 'ERROR please fill in the $DYNAMODB_TABLE environment variable'
-  exit 1
-fi
 
 envsubst < "/etc/teleport.yaml" > "/etc/teleport.yaml"
 
