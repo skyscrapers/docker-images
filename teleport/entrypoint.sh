@@ -51,6 +51,6 @@ if [ ! -z "${AUTH_SERVERS}" ]; then
 fi
 export AUTH_SERVERS_
 
-envsubst < "/etc/teleport.yaml" > "/etc/teleport.yaml"
+envsubst < "/etc/teleport_template.yaml" > "/etc/teleport.yaml"
 
 exec /usr/local/bin/teleport start -c /etc/teleport.yaml

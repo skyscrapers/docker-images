@@ -5,7 +5,7 @@ ADD teleport/tctl /usr/local/bin/tctl
 ADD teleport/teleport /usr/local/bin/teleport
 
 ADD entrypoint.sh /opt/entrypoint.sh
-ADD teleport.yaml /etc/teleport.yaml
+ADD teleport.yaml /etc/teleport_template.yaml
 
 WORKDIR /opt
 
