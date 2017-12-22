@@ -20,6 +20,6 @@ run:
     echo "HUGO_VERSION=${VERSION}" > outputs/args
     echo "VCS_URL=https://github.com/skyscrapers/docker-images" >> outputs/args
     echo "VCS_REF=${REF}" >> outputs/args
-    tar -xzf release/hugo_${VERSION}_Linux-64bit.tar.gz
-    mv hugo_${VERSION}_Linux-64bit/hugo outputs/hugo
+    tar -xzf release/hugo_${VERSION}_Linux-64bit.tar.gz -C release
+    mv release/hugo outputs/
     cp -r docker-hugo/hugo/* outputs/
