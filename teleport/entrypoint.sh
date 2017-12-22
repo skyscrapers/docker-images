@@ -27,6 +27,10 @@ if [ -z "${ENABLE_PROXY}" ]; then
   export ENABLE_PROXY=yes
 fi
 
+if [ -z "${DATA_DIR}" ]; then
+  export DATA_DIR="/var/lib/teleport"
+fi
+
 TOKENS_=""
 if [ ! -z "${TOKENS}" ]; then
   TOKENS_="tokens:
