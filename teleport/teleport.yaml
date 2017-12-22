@@ -21,8 +21,8 @@ teleport:
   # Logging configuration. Possible output values are 'stdout', 'stderr' and
   # 'syslog'. Possible severity values are INFO, WARN and ERROR (default).
   log:
-    output: stderr
-    severity: ERROR
+    output: ${LOG_OUTPUT}
+    severity: ${LOG_SEVERITY}
 
   # Type of storage used for keys. You need to configure this to use etcd
   # backend if you want to run Teleport in HA configuration.

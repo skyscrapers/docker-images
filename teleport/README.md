@@ -10,3 +10,5 @@ This image will run [Teleport](https://gravitational.com/teleport/). Configurati
 - `$DYNAMODB_REGION` (optional): Region where to deploy the DynamoDB table. Defaults to `eu-west-1`
 - `$TOKENS` (optional): Space-separated list of static tokens to configure for the `auth` server. See the Teleport documentation on static tokens [here](https://gravitational.com/teleport/docs/2.3/admin-guide/#static-tokens)
 - `$DATA_DIR` (optional): Teleport `data_dir`. Defaults to `/var/lib/teleport`
+- `$LOG_OUTPUT` (optional): Logging configuration, possible output values are `stdout`, `stderr` and `syslog`. Defaults to `stdout`
+- `$LOG_SEVERITY` (optional): Logging configuration, possible severity values are `INFO`, `WARN` and `ERROR`. Defaults to `ERROR`
