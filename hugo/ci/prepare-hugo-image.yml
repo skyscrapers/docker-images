@@ -17,9 +17,13 @@ run:
   - |
     VERSION=$(cat release/version)
     REF=$(cat docker-hugo/.git/ref)
-    echo "HUGO_VERSION=${VERSION}" > outputs/args
-    echo "VCS_URL=https://github.com/skyscrapers/docker-images" >> outputs/args
-    echo "VCS_REF=${REF}" >> outputs/args
+    cat > outputs/args <<EOF 
+    {
+      "HUGO_VERSION" : "${VERSION}",
+      "VCS_URL" : "https://github.com/skyscrapers/docker-images",
+      "VCS_REF" : "${REF}"
+    }
+    EOF
     tar -xzf release/hugo_${VERSION}_Linux-64bit.tar.gz -C release
     mv release/hugo outputs/
     cp -r docker-hugo/hugo/* outputs/
