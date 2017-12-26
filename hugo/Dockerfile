@@ -14,4 +14,4 @@ LABEL maintainer="Skyscrapers <info@skyscrapers.eu>" \
 RUN apk update && apk add py-pygments && apk add git && apk add bash && rm -rf /var/cache/apk/*
 
 # Install hugo. External script downloads and extracts
-ADD hugo /usr/local/hugo
+ADD hugo /usr/local/bin/hugo
