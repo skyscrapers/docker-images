@@ -5,6 +5,7 @@ ARG G10K_VERSION
 RUN \
 # Check for mandatory build arguments
     : "${PACKER_VERSION:?PACKER_VERSION needs to be set and non-empty. See README.md}"
+    : "${G10K_VERSION:?G10K_VERSION needs to be set and non-empty. See README.md}"
 
 RUN set -ex \
 	\
