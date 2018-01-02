@@ -22,7 +22,7 @@ RUN set -ex \
         wget
 
 RUN set -ex \
-    && wget https://github.com/xorpaul/g10k/releases/download/${G10K_VERSION}/g10k-linux-amd64.zip \
+    && wget https://github.com/xorpaul/g10k/releases/download/v${G10K_VERSION}/g10k-linux-amd64.zip \
     && unzip g10k-linux-amd64.zip -d /bin \
     && rm -f g10k-linux-amd64.zip
 
