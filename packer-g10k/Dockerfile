@@ -14,6 +14,7 @@ RUN set -ex \
         bash \
         gcc \
         git \
+        unzip \
         jq \
         libc-dev \
         make \
