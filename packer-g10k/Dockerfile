@@ -7,11 +7,11 @@ RUN test -n "$PACKER_VERSION"
 RUN set -ex \
     && apk --no-cache add \
         unzip \
+        get \
         openssl \
         wget
 
-RUN set -ex \
-    go get github.com/xorpaul/g10k
+RUN go get github.com/xorpaul/g10k
     
 RUN set -ex \
     && wget --quiet https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip \
