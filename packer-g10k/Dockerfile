@@ -1,24 +1,16 @@
-FROM golang:1.9
+FROM ubuntu:xenial
 ARG PACKER_VERSION
 ARG G10K_VERSION
 
-RUN \
 # Check for mandatory build arguments
-    : "${PACKER_VERSION:?PACKER_VERSION needs to be set and non-empty. See README.md}" \
-RUN \
-    : "${G10K_VERSION:?G10K_VERSION needs to be set and non-empty. See README.md}"
+RUN test -n "$PACKER_VERSION"
+RUN test -n "$G10K_VERSION"
 
 RUN set -ex \
-	\
-	&& apt update; apt -y install \
-        bash \
-        gcc \
-        git \
+    && apt update \
+    && apt -y install \
         unzip \
-        jq \
-        libc-dev \
-        make \
-	openssl \
+        openssl \
         wget
 
 RUN set -ex \
@@ -34,4 +26,12 @@ RUN set -ex \
     && unzip packer_${PACKER_VERSION}_linux_amd64.zip -d /bin \
     && rm -f packer_${PACKER_VERSION}_linux_amd64.zip
 
+FROM alpine:latest
+ARG PACKER_VERSION
+ARG G10K_VERSION
+LABEL packer=$PACKER_VERSION
+LABEL g10k=$G10K_VERSION
+RUN apk --no-cache add git bash openssl openssh make
+COPY --from=0 /bin/packer /bin/packer
+COPY --from=0 /bin/g10k /bin/g10k
 ENTRYPOINT ["/bin/packer"]
