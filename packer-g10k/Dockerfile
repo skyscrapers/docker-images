@@ -3,7 +3,6 @@ ARG PACKER_VERSION
 
 # Check for mandatory build arguments
 RUN test -n "$PACKER_VERSION"
-RUN test -n "$G10K_VERSION"
 
 RUN set -ex \
     && apt update \
