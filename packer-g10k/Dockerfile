@@ -10,7 +10,7 @@ RUN \
 
 RUN set -ex \
 	\
-	&& apt update; apt install \
+	&& apt update; apt -y install \
         bash \
         gcc \
         git \
