@@ -24,7 +24,7 @@ RUN set -ex \
 FROM golang:1.9-alpine
 ARG PACKER_VERSION
 LABEL packer=$PACKER_VERSION
-RUN apk --no-cache add git openssl openssh make
+RUN apk --no-cache add git openssl openssh make bash
 COPY --from=0 /bin/packer /bin/packer
 COPY --from=0 $GOPATH/bin/g10k /bin/g10k
 ENTRYPOINT ["/bin/packer"]
