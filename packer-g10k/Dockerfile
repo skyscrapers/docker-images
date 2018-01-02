@@ -19,12 +19,13 @@ RUN set -ex \
     && sed -i '/.*linux_amd64.zip/!d' packer_${PACKER_VERSION}_SHA256SUMS \
     && sha256sum -cs packer_${PACKER_VERSION}_SHA256SUMS \
     && unzip packer_${PACKER_VERSION}_linux_amd64.zip -d /bin \
-    && rm -f packer_${PACKER_VERSION}_linux_amd64.zip
+    && rm -f packer_${PACKER_VERSION}_linux_amd64.zip \
+    && cp $GOPATH/bin/g10k /bin/ 
 
-FROM golang:1.9-alpine
+FROM alpine:latest
 ARG PACKER_VERSION
 LABEL packer=$PACKER_VERSION
 RUN apk --no-cache add git openssl openssh make bash
 COPY --from=0 /bin/packer /bin/packer
-COPY --from=0 $GOPATH/bin/g10k /bin/g10k
+COPY --from=0 /bin/g10k /bin/g10k
 ENTRYPOINT ["/bin/packer"]
