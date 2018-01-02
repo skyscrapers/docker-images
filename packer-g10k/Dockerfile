@@ -1,4 +1,4 @@
-FROM golang:1.9-alpine3.6
+FROM golang:1.9
 ARG PACKER_VERSION
 ARG G10K_VERSION
 
@@ -10,7 +10,7 @@ RUN \
 
 RUN set -ex \
 	\
-	&& apk add --no-cache --virtual --update \
+	&& apt-get install -y \
         bash \
         gcc \
         git \
