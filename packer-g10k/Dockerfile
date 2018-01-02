@@ -31,6 +31,7 @@ ARG PACKER_VERSION
 ARG G10K_VERSION
 LABEL packer=$PACKER_VERSION
 LABEL g10k=$G10K_VERSION
+RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 RUN apk --no-cache add git bash openssl openssh make
 COPY --from=0 /bin/packer /bin/packer
 COPY --from=0 /bin/g10k /bin/g10k
