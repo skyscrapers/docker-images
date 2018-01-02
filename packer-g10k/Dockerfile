@@ -10,14 +10,13 @@ RUN \
 
 RUN set -ex \
 	\
-	&& apt-get install -y \
+	&& apt update; apt install \
         bash \
         gcc \
         git \
         jq \
         libc-dev \
         make \
-	openssh \
 	openssl \
         wget
 
