@@ -1,12 +1,11 @@
-FROM golang:1.9
+FROM golang:1.9-alpine
 ARG PACKER_VERSION
 
 # Check for mandatory build arguments
 RUN test -n "$PACKER_VERSION"
 
 RUN set -ex \
-    && apt update \
-    && apt -y install \
+    && apk --no-cache add \
         unzip \
         openssl \
         wget
@@ -22,7 +21,7 @@ RUN set -ex \
     && unzip packer_${PACKER_VERSION}_linux_amd64.zip -d /bin \
     && rm -f packer_${PACKER_VERSION}_linux_amd64.zip
 
-FROM golang:1.9alpine3.7
+FROM golang:1.9-alpine
 ARG PACKER_VERSION
 LABEL packer=$PACKER_VERSION
 RUN apk --no-cache add git bash openssl openssh make
