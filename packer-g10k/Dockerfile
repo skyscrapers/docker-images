@@ -1,6 +1,5 @@
-FROM ubuntu:xenial
+FROM golang:1.9
 ARG PACKER_VERSION
-ARG G10K_VERSION
 
 # Check for mandatory build arguments
 RUN test -n "$PACKER_VERSION"
@@ -14,10 +13,8 @@ RUN set -ex \
         wget
 
 RUN set -ex \
-    && wget https://github.com/xorpaul/g10k/releases/download/v${G10K_VERSION}/g10k-linux-amd64.zip \
-    && unzip g10k-linux-amd64.zip -d /bin \
-    && rm -f g10k-linux-amd64.zip
-
+    go get https://github.com/xorpaul/g10k
+    
 RUN set -ex \
     && wget --quiet https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip \
     && wget --quiet https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_SHA256SUMS \
@@ -26,13 +23,10 @@ RUN set -ex \
     && unzip packer_${PACKER_VERSION}_linux_amd64.zip -d /bin \
     && rm -f packer_${PACKER_VERSION}_linux_amd64.zip
 
-FROM alpine:latest
+FROM golang:1.9alpine3.7
 ARG PACKER_VERSION
-ARG G10K_VERSION
 LABEL packer=$PACKER_VERSION
-LABEL g10k=$G10K_VERSION
-RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 RUN apk --no-cache add git bash openssl openssh make
 COPY --from=0 /bin/packer /bin/packer
-COPY --from=0 /bin/g10k /bin/g10k
+COPY --from=0 $GOPATH/bin/g10k /bin/g10k
 ENTRYPOINT ["/bin/packer"]
