@@ -12,7 +12,7 @@ RUN set -ex \
         wget
 
 RUN set -ex \
-    go get https://github.com/xorpaul/g10k
+    go get github.com/xorpaul/g10k
     
 RUN set -ex \
     && wget --quiet https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip \
