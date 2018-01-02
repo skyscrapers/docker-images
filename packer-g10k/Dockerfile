@@ -7,7 +7,7 @@ RUN test -n "$PACKER_VERSION"
 RUN set -ex \
     && apk --no-cache add \
         unzip \
-        get \
+        git \
         openssl \
         wget
 
