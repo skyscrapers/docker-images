@@ -31,6 +31,22 @@ To build this image, a build argument is required:
 You can specify it in a manual build like this:
 `$ docker build --build-arg PACKER_VERSION=1.0.4 -t skyscrapers/packer:1.0.4 .`
 
+## packer g10k
+
+This is a Docker image containing the following tools:
+
+* Go
+* [g10k](https://github.com/xorpaul/g10k)
+* [Packer](https://www.packer.io/)
+
+All these tools are used to succesfully build AWS images for the Skyscrapers customers, supports g10k as faster replacement for r10k for building Puppet modules.
+
+To build this image, a build argument is required:
+* `PACKER_VERSION`
+
+You can specify it in a manual build like this:
+`$ docker build --build-arg PACKER_VERSION=1.0.4 -t skyscrapers/packer-g10k:1.0.4 .`
+
 ## Teleport
 
 This is a Docker image for [Teleport](https://gravitational.com/teleport/)
