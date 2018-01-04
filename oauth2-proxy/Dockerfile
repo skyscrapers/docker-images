@@ -1,4 +1,4 @@
-FROM scratch
+FROM alpine
 
 ADD oauth2_proxy /bin/oauth2_proxy
 
