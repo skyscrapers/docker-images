@@ -1,0 +1,27 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: alpine
+
+inputs:
+  - name: oauth2-proxy-release
+  - name: oauth2-proxy-git
+
+outputs:
+  - name: outputs
+
+run:
+  path: sh
+  args:
+    - -c
+    - |
+      set -e
+      for FILE in oauth2-proxy-release/*.tar.gz
+      do
+        tar -xzf $FILE --strip-components 1 -C outputs/
+        break
+      done
+      cp oauth2-proxy-git/oauth2-proxy/Dockerfile outputs/Dockerfile
