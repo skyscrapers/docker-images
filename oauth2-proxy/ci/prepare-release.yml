@@ -11,7 +11,7 @@ inputs:
   - name: oauth2-proxy-git
 
 outputs:
-  - name: output
+  - name: outputs
 
 run:
   path: sh
