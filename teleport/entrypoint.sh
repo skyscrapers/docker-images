@@ -17,6 +17,8 @@ fi
 
 if [ -z "${AUTH_TOKEN}" ] && [ "${ENABLE_AUTH}" == "no" ]; then
   echo 'ERROR please provide an $AUTH_TOKEN to register with an auth server'
+  exit 1
+fi
 
 TOKENS_=""
 if [ ! -z "${TOKENS}" ]; then
@@ -43,7 +45,7 @@ fi
 export AUTH_SERVERS_
 
 AUTH_TOKEN_=""
-if [ ! -z "${AUTH_TOKEN}"]; then
+if [ ! -z "${AUTH_TOKEN}" ]; then
   AUTH_TOKEN_="auth_token: ${AUTH_TOKEN}"
 fi
 export AUTH_TOKEN_
