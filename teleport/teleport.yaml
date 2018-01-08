@@ -71,7 +71,7 @@ auth_service:
 # This section configures the 'node service':
 ssh_service:
   # Turns 'ssh' role on. Default is 'yes'
-  enabled: false
+  enabled: no
 
 # This section configures the 'proxy servie'
 proxy_service:

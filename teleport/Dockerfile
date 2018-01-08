@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM alpine:3.6
 
 ENV DYNAMODB_REGION="eu-west-1" \
     ENABLE_AUTH="yes" \
@@ -14,6 +14,7 @@ ADD teleport/teleport /usr/local/bin/teleport
 ADD entrypoint.sh /opt/entrypoint.sh
 ADD teleport.yaml /etc/teleport_template.yaml
 
-RUN chmod +x /opt/entrypoint.sh
+RUN chmod +x /opt/entrypoint.sh && \
+    apk add --no-cache gettext
 
 ENTRYPOINT ["/opt/entrypoint.sh"]
