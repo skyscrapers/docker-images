@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -z "${CLUSTER_NAME}" ] && [ "${ENABLE_AUTH}" == "yes" ]; then
   echo 'ERROR please fill in the $CLUSTER_NAME environment variable'
