@@ -15,6 +15,9 @@ if [ -z "${AUTH_SERVERS}" ] && [ "${ENABLE_PROXY}" == "yes" ]; then
   exit 1
 fi
 
+if [ -z "${AUTH_TOKEN}" ] && [ "${ENABLE_AUTH}" == "no" ]; then
+  echo 'ERROR please provide an $AUTH_TOKEN to register with an auth server'
+
 TOKENS_=""
 if [ ! -z "${TOKENS}" ]; then
   TOKENS_="tokens:
@@ -38,6 +41,12 @@ if [ ! -z "${AUTH_SERVERS}" ]; then
   done
 fi
 export AUTH_SERVERS_
+
+AUTH_TOKEN_=""
+if [ ! -z "${AUTH_TOKEN}"]; then
+  AUTH_TOKEN_="auth_token: ${AUTH_TOKEN}"
+fi
+export AUTH_TOKEN_
 
 envsubst < "/etc/teleport_template.yaml" > "/etc/teleport.yaml"
 

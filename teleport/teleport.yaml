@@ -12,6 +12,8 @@ teleport:
   # if you configure teleport auth to run in HA configuration
   ${AUTH_SERVERS_}
 
+  ${AUTH_TOKEN_}
+
   # Teleport throttles all connections to avoid abuse. These settings allow
   # you to adjust the default limits
   connection_limits:
