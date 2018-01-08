@@ -14,4 +14,6 @@ ADD teleport/teleport /usr/local/bin/teleport
 ADD entrypoint.sh /opt/entrypoint.sh
 ADD teleport.yaml /etc/teleport_template.yaml
 
+RUN chmod +x /opt/entrypoint.sh
+
 ENTRYPOINT ["/opt/entrypoint.sh"]
