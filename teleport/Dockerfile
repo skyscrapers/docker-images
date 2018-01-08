@@ -16,7 +16,7 @@ ADD teleport.yaml /etc/teleport_template.yaml
 
 RUN chmod +x /opt/entrypoint.sh && \
     apt-get update && \
-    apt-get install gettext-base && \
+    apt-get install -y gettext-base && \
     rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["/opt/entrypoint.sh"]
