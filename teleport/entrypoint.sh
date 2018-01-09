@@ -67,17 +67,17 @@ if [ ! -z "${AUTH_TOKEN}" ]; then
 fi
 export AUTH_TOKEN_
 
-envsubst < "/etc/teleport_template.yaml" > "/etc/teleport.yaml"
-
-if [ "${ENABLE_AUTH}" == "yes" ] && [ "${CREATE_ADMIN_USER}" == "yes" ]; then
-  create_admin_user &
-fi
-
 if [ "${ADVERTISE_EC2_IP}" == "yes" ]; then
   ADVERTISE_IP_="advertise_ip: $(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)"
 else
   ADVERTISE_IP_=""
 fi
 export ADVERTISE_IP_
+
+envsubst < "/etc/teleport_template.yaml" > "/etc/teleport.yaml"
+
+if [ "${ENABLE_AUTH}" == "yes" ] && [ "${CREATE_ADMIN_USER}" == "yes" ]; then
+  create_admin_user &
+fi
 
 exec /usr/local/bin/teleport start -c /etc/teleport.yaml
