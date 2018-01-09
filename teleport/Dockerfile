@@ -7,7 +7,8 @@ ENV DYNAMODB_REGION="eu-west-1" \
     DATA_DIR="/var/lib/teleport" \
     LOG_OUTPUT="stdout" \
     LOG_SEVERITY="ERROR" \
-    CREATE_ADMIN_USER="yes"
+    CREATE_ADMIN_USER="yes" \
+    ADVERTISE_EC2_IP="yes"
 
 ADD teleport/tsh /usr/local/bin/tsh
 ADD teleport/tctl /usr/local/bin/tctl
@@ -18,7 +19,7 @@ ADD teleport.yaml /etc/teleport_template.yaml
 
 RUN chmod +x /opt/entrypoint.sh && \
     apt-get update && \
-    apt-get install -y gettext-base ca-certificates && \
+    apt-get install -y gettext-base ca-certificates curl && \
     rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["/opt/entrypoint.sh"]
