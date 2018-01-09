@@ -5,7 +5,8 @@ ENV DYNAMODB_REGION="eu-west-1" \
     ENABLE_PROXY="yes" \
     DATA_DIR="/var/lib/teleport" \
     LOG_OUTPUT="stdout" \
-    LOG_SEVERITY="ERROR"
+    LOG_SEVERITY="ERROR" \
+    CREATE_ADMIN_USER="yes"
 
 ADD teleport/tsh /usr/local/bin/tsh
 ADD teleport/tctl /usr/local/bin/tctl

@@ -1,5 +1,22 @@
 #!/bin/bash
 
+set -e
+
+create_admin_user () {
+  set +e
+  sleep 60 # wait a minute until the auth server is up
+  echo "Creating bootstrap admin teleport user"
+  create_output=$(/usr/local/bin/tctl users add admin root)
+  status=$?
+
+  if [ ${status} -ne 0 ]; then
+    echo "admin user is already created. Skipping"
+  else
+    echo "$create_output"
+  fi
+  set -e
+}
+
 if [ -z "${CLUSTER_NAME}" ] && [ "${ENABLE_AUTH}" == "yes" ]; then
   echo 'ERROR please fill in the $CLUSTER_NAME environment variable'
   exit 1
@@ -51,5 +68,9 @@ fi
 export AUTH_TOKEN_
 
 envsubst < "/etc/teleport_template.yaml" > "/etc/teleport.yaml"
+
+if [ "${ENABLE_AUTH}" == "yes" ] && [ "${CREATE_ADMIN_USER}" == "yes" ]; then
+  create_admin_user &
+fi
 
 exec /usr/local/bin/teleport start -c /etc/teleport.yaml

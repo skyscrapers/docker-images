@@ -13,3 +13,4 @@ This image will run [Teleport](https://gravitational.com/teleport/). Configurati
 - `$DATA_DIR` (optional): Teleport `data_dir`. Defaults to `/var/lib/teleport`
 - `$LOG_OUTPUT` (optional): Logging configuration, possible output values are `stdout`, `stderr` and `syslog`. Defaults to `stdout`
 - `$LOG_SEVERITY` (optional): Logging configuration, possible severity values are `INFO`, `WARN` and `ERROR`. Defaults to `ERROR`
+- `$CREATE_ADMIN_USER` (optional): If set to `"yes"` it will create a teleport user named admin and put the login url in the logs. Defaults to `"yes"`
