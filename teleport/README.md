@@ -16,3 +16,11 @@ This image will run [Teleport](https://gravitational.com/teleport/). Configurati
 - `$LOG_SEVERITY` (optional): Logging configuration, possible severity values are `INFO`, `WARN` and `ERROR`. Defaults to `ERROR`
 - `$CREATE_ADMIN_USER` (optional): If set to `"yes"` it will create a teleport user named admin and put the login url in the logs. Defaults to `"yes"`
 - `$ADVERTISE_EC2_IP` (optional): If set to `"yes"` it will set the teleport `advertise_ip` configuration with the IP of the EC2 host this container is running. It'll use `curl -s http://169.254.169.254/latest/meta-data/local-ipv4` to fetch the IP address. Defaults to `"yes"`
+
+## Administration commands in auth server (tctl)
+
+Depending on where you run this Docker image, it can be challenging to issue `tctl` administrative commands, as right now you have to run them from within the `auth` server. There's [some work being done](https://github.com/gravitational/teleport/issues/1525) to be able to run `tctl` remotely, but it's not yet implemented.
+
+To overcome this limitation, this image can create an initial admin user in the Teleport cluster, so you can use it to ssh into the `auth` server using Teleport itself and run `tctl`. To achieve this you'll need to run both `auth` and `node` in the same container (set `$ENABLE_AUTH="yes"` and `$ENABLE_NODE="yes"`), so the `auth` server registers itself as a node in the Teleport cluster. You'll also need to set `$CREATE_ADMIN_USER="yes"` (it's like that by default), this will create the admin user on the first boot, if it's not already created, and will output the signup url to `stdout`.
+
+Also note that, by default, the container will use the EC2 private IP address to register to the Teleport cluster. You can turn off this behavior by setting `$ADVERTISE_EC2_IP="no"`, then the auth server will report with the localhost IP address `127.0.0.1`.
