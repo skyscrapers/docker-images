@@ -3,6 +3,7 @@ FROM debian:jessie
 ENV DYNAMODB_REGION="eu-west-1" \
     ENABLE_AUTH="yes" \
     ENABLE_PROXY="yes" \
+    ENABLE_NODE="no" \
     DATA_DIR="/var/lib/teleport" \
     LOG_OUTPUT="stdout" \
     LOG_SEVERITY="ERROR" \

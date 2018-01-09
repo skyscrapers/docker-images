@@ -73,7 +73,10 @@ auth_service:
 # This section configures the 'node service':
 ssh_service:
   # Turns 'ssh' role on. Default is 'yes'
-  enabled: no
+  enabled: $ENABLE_NODE
+
+  # IP and the port for SSH service to bind to.
+  listen_addr: 0.0.0.0:3022
 
 # This section configures the 'proxy servie'
 proxy_service:

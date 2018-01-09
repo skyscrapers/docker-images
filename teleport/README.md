@@ -4,6 +4,7 @@ This image will run [Teleport](https://gravitational.com/teleport/). Configurati
 
 - `$ENABLE_AUTH` (optional): Toggle to enable or disable Teleport `auth` role. Defaults to "yes", set to "no" to disable
 - `$ENABLE_PROXY` (optional): Toggle to enable or disable Teleport `proxy` role. Defaults to "yes", set to "no" to disable
+- `$ENABLE_NODE` (optional): Toggle to enable or disable Teleport `node` role. Defaults to "no", set to "yes" to enable
 - `$CLUSTER_NAME` (**mandatory** if `$ENABLE_AUTH` is set to `"yes"`): Name for the Teleport cluster, required to provide continuity in case you want to run multiple `auth` containers or new containers are launched in the future
 - `$AUTH_SERVERS` (**mandatory** if `$ENABLE_PROXY` is set to `"yes"`): Space-separated list of auth server addresses (including the port). This is required if the `proxy` role is enabled. Example: `AUTH_SERVERS="127.0.0.1:3025"`
 - `$AUTH_TOKEN` (**mandatory** if `$ENABLE_AUTH` is set to `"no"`): token to use to register with the auth server. It only applies in a standalone proxy server.
