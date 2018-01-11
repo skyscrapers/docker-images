@@ -43,7 +43,7 @@ if [ ! -z "${TOKENS}" ]; then
 "
 
   for t in ${TOKENS}; do
-    TOKENS_="${TOKENS_}    - ${t}
+    TOKENS_="${TOKENS_}    - \"${t}\"
 "
   done
 fi
