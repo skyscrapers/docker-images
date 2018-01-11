@@ -28,12 +28,7 @@ teleport:
     output: ${LOG_OUTPUT}
     severity: ${LOG_SEVERITY}
 
-  # Type of storage used for keys. You need to configure this to use etcd
-  # backend if you want to run Teleport in HA configuration.
-  storage:
-    type: dynamodb
-    region: $DYNAMODB_REGION
-    table_name: $DYNAMODB_TABLE
+  ${STORAGE_}
 
 # This section configures the 'auth service':
 auth_service:

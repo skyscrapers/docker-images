@@ -74,6 +74,18 @@ else
 fi
 export ADVERTISE_IP_
 
+STORAGE_=""
+if [ "${ENABLE_AUTH}" == "yes" ]; then
+  STORAGE_="# Type of storage used for keys. You need to configure this to use etcd or dynamodb
+    # backend if you want to run Teleport in HA configuration.
+    storage:
+      type: dynamodb
+      region: $DYNAMODB_REGION
+      table_name: $DYNAMODB_TABLE
+"
+fi
+export STORAGE_
+
 envsubst < "/etc/teleport_template.yaml" > "/etc/teleport.yaml"
 
 if [ "${ENABLE_AUTH}" == "yes" ] && [ "${CREATE_ADMIN_USER}" == "yes" ]; then
