@@ -2,7 +2,10 @@ FROM alpine:3.6
 
 ENV AWS_REGION=eu-west-1
 
-RUN apk add --update \
+ADD entrypoint.sh /opt/entrypoint.sh
+
+RUN chmod +x /opt/entrypoint.sh && \
+    apk add --update \
       openssl \
       ca-certificates \
       groff \
@@ -15,7 +18,5 @@ RUN apk add --update \
     pip install awscli-cwlogs && \
     apk --purge del build-dependencies && \
     rm -rf /var/cache/apk/*
-
-ADD entrypoint.sh /opt/entrypoint.sh
 
 ENTRYPOINT ["/opt/entrypoint.sh"]
