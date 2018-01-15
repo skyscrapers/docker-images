@@ -11,7 +11,6 @@ This image will run [Teleport](https://gravitational.com/teleport/). Configurati
 - `$DYNAMODB_TABLE` (**mandatory** if `$ENABLE_AUTH` is set to `"yes"`): Name of the DynamoDB table to use, Teleport will automatically create it if doesn't exist
 - `$DYNAMODB_REGION` (optional): Region where to deploy the DynamoDB table. Defaults to `eu-west-1`
 - `$TOKENS` (optional): Space-separated list of static tokens to configure for the `auth` server. See the Teleport documentation on static tokens [here](https://gravitational.com/teleport/docs/2.3/admin-guide/#static-tokens)
-- `$DATA_DIR` (optional): Teleport `data_dir`. Defaults to `/var/lib/teleport`
 - `$LOG_OUTPUT` (optional): Logging configuration, possible output values are `stdout`, `stderr` and `syslog`. Defaults to `stdout`
 - `$LOG_SEVERITY` (optional): Logging configuration, possible severity values are `INFO`, `WARN` and `ERROR`. Defaults to `ERROR`
 - `$CREATE_ADMIN_USER` (optional): If set to `"yes"` it will create a teleport user named admin and put the login url in the logs. Defaults to `"yes"`
