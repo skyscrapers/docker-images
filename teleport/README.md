@@ -15,7 +15,7 @@ This image will run [Teleport](https://gravitational.com/teleport/). Configurati
 - `$LOG_SEVERITY` (optional): Logging configuration, possible severity values are `INFO`, `WARN` and `ERROR`. Defaults to `ERROR`
 - `$CREATE_ADMIN_USER` (optional): If set to `"yes"` it will create a teleport user named admin and put the login url in the logs. Defaults to `"yes"`
 - `$ADVERTISE_EC2_IP` (optional): If set to `"yes"` it will set the teleport `advertise_ip` configuration with the IP of the EC2 host this container is running. It'll use `curl -s http://169.254.169.254/latest/meta-data/local-ipv4` to fetch the IP address. Defaults to `"yes"`
-- `$SESSION_RECORDING` (optional): Optional setting for configuring session recording. Check the [Teleport documentation](https://gravitational.com/teleport/docs/2.4/admin-guide/#configuration) for more info. Defaults to `"on"`
+- `$SESSION_RECORDING` (optional): Optional setting for configuring session recording. Check the [Teleport documentation](https://gravitational.com/teleport/docs/2.4/admin-guide/#configuration) for more info. Defaults to `"node"`
 
 ## Administration commands in auth server (tctl)
 

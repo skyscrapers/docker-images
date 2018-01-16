@@ -8,7 +8,7 @@ ENV DYNAMODB_REGION="eu-west-1" \
     LOG_SEVERITY="ERROR" \
     CREATE_ADMIN_USER="yes" \
     ADVERTISE_EC2_IP="yes" \
-    SESSION_RECORDING="on"
+    SESSION_RECORDING="node"
 
 ADD teleport/tsh /usr/local/bin/tsh
 ADD teleport/tctl /usr/local/bin/tctl
