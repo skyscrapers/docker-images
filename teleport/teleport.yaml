@@ -67,6 +67,12 @@ auth_service:
   # certificates and keys (may need to wipe out /var/lib/teleport directory)
   cluster_name: ${CLUSTER_NAME}
 
+  # Optional setting for configuring session recording. Possible values are:
+  #    "on"    : sessions will be recorded on the node level  (the default)
+  #    "proxy" : recording on the proxy level, see "recording proxy mode" in "Audit Log" section
+  #    "off"   : session recording is turned off
+  session_recording: "${SESSION_RECORDING}"
+
 # This section configures the 'node service':
 ssh_service:
   # Turns 'ssh' role on. Default is 'yes'
