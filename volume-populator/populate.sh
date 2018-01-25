@@ -6,7 +6,7 @@ for file in $FILES_A; do
 	if [ -f $VOLUME_DIR/$file ]; then
 		echo "$file exists in volume"
 	fi
-	if [ ! -f $ENV_B_DIR/$file ]; then
+	if [ ! -f $VOLUME_DIR/$file ]; then
 		echo "$file doesn't exist in b, copying to $VOLUME_DIR/$file"
 		cp $CONFIGMAP_DIR/$file $VOLUME_DIR/$file
 	fi
