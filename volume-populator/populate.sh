@@ -2,7 +2,7 @@
 
 export FILES_A=$(find $CONFIGMAP_DIR -maxdepth 1 -mindepth 1 -type f -exec basename {} \;)
 
-for file in $CONFIGMAP_DIR; do
+for file in $FILES_A; do
 	if [ -f $VOLUME_DIR/$file ]; then
 		echo "$file exists in volume"
 	fi
