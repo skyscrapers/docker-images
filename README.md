@@ -3,7 +3,7 @@
 This repository contains the Docker setup to build a number of derived/customised
 Docker images. Each folder contains the setup for a single image.
 
-The Concourse pipeline to build all images can be found in the 
+The Concourse pipeline to build all images can be found in the
 [skyscrapers/ci](https://github.com/skyscrapers/ci) repository.
 
 ## concourse
@@ -22,7 +22,7 @@ This is a Docker image containing the following tools:
 * [Packer](https://www.packer.io/)
 
 All these tools are used to succesfully build AWS images for the Skyscrapers customers.
-The Racker tool is used to deep merge a generic (Ruby) template with 
+The Racker tool is used to deep merge a generic (Ruby) template with
 customer specific extensions before generating a JSON Packer template.
 
 To build this image, a build argument is required:
@@ -52,3 +52,7 @@ You can specify it in a manual build like this:
 This is a Docker image for [Teleport](https://gravitational.com/teleport/)
 
 This will build a Teleport image from the Debian base image. This Dockerfile expects the released Teleport binaries in `teleport/teleport` folder.
+
+## volume-populator
+
+This container is used to populate volumes from configmaps. Useful in Kubernetes as an init container to populate a volume with data before the application starts.
