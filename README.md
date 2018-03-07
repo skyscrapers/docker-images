@@ -61,4 +61,4 @@ This container is used to populate volumes from configmaps. Useful in Kubernetes
 
 This is a Nginx Docker image based on the [upstream Docker image](https://hub.docker.com/_/nginx/).
 
-We want to monitor Nginx and for this we need the [VTS Nginx module](https://hub.docker.com/_/nginx/) to have enhanced metrics. To activate VTS we have to build the binary from scratch.
+We want to monitor Nginx and for this we need the [VTS Nginx module](https://github.com/vozlt/nginx-module-vts) to have enhanced metrics. To activate VTS we have to build the binary from scratch.
