@@ -56,3 +56,9 @@ This will build a Teleport image from the Debian base image. This Dockerfile exp
 ## volume-populator
 
 This container is used to populate volumes from configmaps. Useful in Kubernetes as an init container to populate a volume with data before the application starts.
+
+## nginx
+
+This is a Nginx Docker image based on the [upstream Docker image](https://hub.docker.com/_/nginx/).
+
+We want to monitor Nginx and for this we need the [VTS Nginx module](https://github.com/vozlt/nginx-module-vts) to have enhanced metrics. To activate VTS we have to build the binary from scratch.
