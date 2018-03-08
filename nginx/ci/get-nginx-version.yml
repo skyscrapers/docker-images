@@ -14,4 +14,5 @@ run:
   args:
     - -exc
     - |
+      cat nginx/Dockerfile | awk '$1 == "ENV" && $2 == "NGINX_VERSION" { print $3; exit }'
       cat nginx/Dockerfile | awk '$1 == "ENV" && $2 == "NGINX_VERSION" { print $3; exit }' > outputs/version
