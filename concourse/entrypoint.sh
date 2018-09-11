@@ -13,11 +13,14 @@ if [ ! -z ${CONCOURSE_VAULT_URL} ] && [ "${CONCOURSE_VAULT_AUTH_BACKEND}" == "aw
 fi
 
 if [ ! -z ${CONCOURSE_GITHUB_AUTH_CLIENT_ID} ]; then
-  export FLAGS="--github-client-id=${CONCOURSE_GITHUB_AUTH_CLIENT_ID} --github-client-secret=${CONCOURSE_GITHUB_AUTH_CLIENT_SECRET}"
+  export FLAGS=" \ 
+--github-client-id=${CONCOURSE_GITHUB_AUTH_CLIENT_ID} \
+--github-client-secret=${CONCOURSE_GITHUB_AUTH_CLIENT_SECRET}"
 fi
 
 if [ ! -z ${CONCOURSE_BASIC_AUTH_USERNAME} ]; then
-  export FLAGS="${FLAGS} --add-local-user ${CONCOURSE_BASIC_AUTH_USERNAME}:${CONCOURSE_BASIC_AUTH_PASSWORD}"
+  export FLAGS="${FLAGS} \
+--add-local-user ${CONCOURSE_BASIC_AUTH_USERNAME}:${CONCOURSE_BASIC_AUTH_PASSWORD}"
 fi
 
 /usr/local/bin/concourse "$@ ${FLAGS}"
