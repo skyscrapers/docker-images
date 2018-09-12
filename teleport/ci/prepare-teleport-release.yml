@@ -18,7 +18,9 @@ run:
   args:
   - -exc
   - |
+    apk add --update curl
     VERSION=$(cat teleport-release/version)
-    tar -xzf teleport-release/teleport-v$VERSION-linux-amd64-bin.tar.gz
+    curl -so https://get.gravitational.com/teleport-v$VERSION-linux-amd64-bin.tar.gz
+    tar -xzf teleport-v$VERSION-linux-amd64-bin.tar.gz
     mv teleport outputs/teleport
     cp -r docker-teleport/teleport/* outputs/
