@@ -1,7 +1,7 @@
 FROM concourse/concourse
 
 # This is the release of Vault to pull in.
-ARG VAULT_VERSION=0.9.0
+ARG VAULT_VERSION=0.9.6
 
 ADD entrypoint.sh /opt/entrypoint.sh
 
