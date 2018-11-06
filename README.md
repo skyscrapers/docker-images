@@ -63,6 +63,6 @@ This is a Nginx Docker image based on the [upstream Docker image](https://hub.do
 
 We want to monitor Nginx and for this we need the [VTS Nginx module](https://github.com/vozlt/nginx-module-vts) to have enhanced metrics. To activate VTS we have to build the binary from scratch.
 
-## cloud-nuke
+## aws-nuke
 
-Docker image containing the [cloud-nuke](https://github.com/gruntwork-io/cloud-nuke) binary. Based on alpine.
+Docker image containing the [aws-nuke](https://github.com/gruntwork-io/aws-nuke) binary. Based on alpine.
