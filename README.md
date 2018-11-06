@@ -65,4 +65,4 @@ We want to monitor Nginx and for this we need the [VTS Nginx module](https://git
 
 ## aws-nuke
 
-Docker image containing the [aws-nuke](https://github.com/gruntwork-io/aws-nuke) binary. Based on alpine.
+Docker image containing the [aws-nuke](https://github.com/rebuy-de/aws-nuke) binary. Based on alpine.
