@@ -63,7 +63,7 @@ Docker image containing the [aws-nuke](https://github.com/rebuy-de/aws-nuke) bin
 
 ## kops
 
-Apline based docker image continaing the [`awscli`](https://github.com/aws/aws-cli), [`kops`](https://github.com/kubernetes/kops) and [`kubectl`](https://github.com/kubernetes/kubectl).
+Apline based docker image containing the [`awscli`](https://github.com/aws/aws-cli), [`kops`](https://github.com/kubernetes/kops) and [`kubectl`](https://github.com/kubernetes/kubectl).
 
 You can control which versions are built via the following `ARG`s:
 
