@@ -60,3 +60,15 @@ We want to monitor Nginx and for this we need the [VTS Nginx module](https://git
 ## aws-nuke
 
 Docker image containing the [aws-nuke](https://github.com/rebuy-de/aws-nuke) binary. Based on alpine.
+
+## kops
+
+Apline based docker image containing the [`awscli`](https://github.com/aws/aws-cli), [`kops`](https://github.com/kubernetes/kops) and [`kubectl`](https://github.com/kubernetes/kubectl).
+
+You can control which versions are built via the following `ARG`s:
+
+```docker
+ARG AWSCLI_VERSION=1.16.97
+ARG KOPS_VERSION=1.11.0
+ARG KUBECTL_VERSION=v1.13.3
+```
