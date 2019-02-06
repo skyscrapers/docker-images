@@ -4,7 +4,7 @@ ARG AWSCLI_VERSION=1.16.97
 ARG KOPS_VERSION=1.11.0
 ARG KUBECTL_VERSION=v1.13.3
 
-RUN  apk -v --update add ca-certificates python py-pip groff less mailcap jq curl \
+RUN  apk -v --update --no-cache add ca-certificates python py-pip groff less mailcap jq curl bash \
   && pip install --upgrade --no-cache-dir awscli==$AWSCLI_VERSION \
   && apk -v --purge del py-pip \
   && rm /var/cache/apk/*
