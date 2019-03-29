@@ -2,7 +2,7 @@ FROM alpine:latest
 
 ARG AWSCLI_VERSION=1.16.116
 ARG KOPS_VERSION=1.11.1
-ARG KUBECTL_VERSION=v1.13.4
+ARG KUBECTL_VERSION=v1.14.0
 
 RUN  apk add --update --no-cache bash python jq ca-certificates groff less \
   && apk add --update --no-cache --virtual build-deps py-pip curl \
