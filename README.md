@@ -65,6 +65,8 @@ Docker image containing the [aws-nuke](https://github.com/rebuy-de/aws-nuke) bin
 
 Docker image containing the [awscli](https://github.com/aws/aws-cli) and `jq`. Based on alpine.
 
+We were originally using the [mesosphere/aws-cli](https://github.com/mesosphere/aws-cli) image, but it is now quite outdated. Our image is built on every new release of the `awscli` pip package.
+
 ## kops
 
 Apline based docker image containing the [`awscli`](https://github.com/aws/aws-cli), [`kops`](https://github.com/kubernetes/kops) and [`kubectl`](https://github.com/kubernetes/kubectl).
