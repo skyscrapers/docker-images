@@ -61,9 +61,9 @@ We want to monitor Nginx and for this we need the [VTS Nginx module](https://git
 
 Docker image containing the [aws-nuke](https://github.com/rebuy-de/aws-nuke) binary. Based on alpine.
 
-## aws-cli
+## awscli
 
-Docker image containing the [aws-cli](https://github.com/aws/aws-cli) and `jq`. Based on alpine.
+Docker image containing the [awscli](https://github.com/aws/aws-cli) and `jq`. Based on alpine.
 
 ## kops
 
