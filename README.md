@@ -78,3 +78,7 @@ ARG AWSCLI_VERSION=1.16.97
 ARG KOPS_VERSION=1.11.0
 ARG KUBECTL_VERSION=v1.13.3
 ```
+
+## yq
+
+Alpine based docker image with [`yq`](https://github.com/kislyuk/yq) and [`jq`](https://stedolan.github.io/jq/) tools pre-installed.
