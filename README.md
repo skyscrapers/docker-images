@@ -20,6 +20,7 @@ The Racker tool is used to deep merge a generic (Ruby) template with
 customer specific extensions before generating a JSON Packer template.
 
 To build this image, a build argument is required:
+
 * `PACKER_VERSION`
 
 You can specify it in a manual build like this:
@@ -36,6 +37,7 @@ This is a Docker image containing the following tools:
 All these tools are used to succesfully build AWS images for the Skyscrapers customers, supports g10k as faster replacement for r10k for building Puppet modules.
 
 To build this image, a build argument is required:
+
 * `PACKER_VERSION`
 
 You can specify it in a manual build like this:
