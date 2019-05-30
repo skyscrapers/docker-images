@@ -84,3 +84,7 @@ ARG KUBECTL_VERSION=v1.13.3
 ## yq
 
 Alpine based docker image with [`yq`](https://github.com/kislyuk/yq) and [`jq`](https://stedolan.github.io/jq/) tools pre-installed.
+
+## spruce
+
+Alpine based docker image [Spruce](https://github.com/geofffranks/spruce) pre-installed.
