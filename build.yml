@@ -9,7 +9,6 @@ image_resource:
 inputs:
   - name: context
     path: .
-
 outputs:
   - name: image
 
