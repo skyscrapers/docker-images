@@ -12,6 +12,7 @@ inputs:
   - name: args
     path: args/
     optional: true
+
 outputs:
   - name: image
 
