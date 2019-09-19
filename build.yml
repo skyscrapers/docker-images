@@ -7,17 +7,17 @@ image_resource:
     repository: vito/oci-build-task
 
 inputs:
-  - name: context
+  context:
     path: .
-  - name: args
+  args:
     path: args/
     optional: true
 outputs:
-  - name: image
+  image:
 
 params:
   CONTEXT:
-  BUILD_ARGS_FILE: ""
+  BUILD_ARGS_FILE:
 
 caches:
   - path: cache
