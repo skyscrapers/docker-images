@@ -9,6 +9,8 @@ image_resource:
 inputs:
   - name: context
     path: .
+  - name: args
+    path: .
 outputs:
   - name: image
 
