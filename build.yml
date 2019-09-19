@@ -9,11 +9,16 @@ image_resource:
 inputs:
   - name: context
     path: .
+  - name: args
+    path: args/
+    optional: true
+
 outputs:
   - name: image
 
 params:
-  - name: CONTEXT
+  CONTEXT:
+  BUILD_ARGS_FILE:
 
 caches:
   - path: cache
