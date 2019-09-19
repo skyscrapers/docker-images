@@ -15,8 +15,8 @@ outputs:
   - name: image
 
 params:
-  - name: CONTEXT
-  - name: BUILD_ARGS_FILE
+  CONTEXT:
+  BUILD_ARGS_FILE: ""
 
 caches:
   - path: cache
