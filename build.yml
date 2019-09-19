@@ -14,6 +14,7 @@ outputs:
 
 params:
   - name: CONTEXT
+  - name: BUILD_ARGS_FILE
 
 caches:
   - path: cache
