@@ -10,7 +10,7 @@ inputs:
   - name: context
     path: .
   - name: args
-    path: .
+    path: args/
 outputs:
   - name: image
 
