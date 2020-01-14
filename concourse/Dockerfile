@@ -4,7 +4,7 @@ ARG CONCOURSE_VERSION=5.8.0
 
 RUN apk update \
   && apk add --no-cache bash gzip tar ca-certificates wget \
-  && wget https://github.com/concourse/concourse/releases/download/${CONCOURSE_VERSION}/fly-${CONCOURSE_VERSION}-linux-amd64.tgz -O /tmp/fly.gz \
+  && wget https://github.com/concourse/concourse/releases/download/v${CONCOURSE_VERSION}/fly-${CONCOURSE_VERSION}-linux-amd64.tgz -O /tmp/fly.gz \
   && tar xvzfO /tmp/fly.gz > /usr/bin/fly \
   && chmod +x /usr/bin/fly
 
