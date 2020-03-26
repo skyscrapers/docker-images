@@ -5,7 +5,7 @@ ENV FAH_VERSION_MINOR=7.5
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN useradd -rm -b /home fah && \
+RUN useradd -rm -b /home -u 1000 fah && \
   apt-get update && \
   apt-get install --no-install-recommends -y curl bzip2 ca-certificates && \
   curl -o /tmp/fah.deb https://download.foldingathome.org/releases/public/release/fahclient/debian-stable-64bit/v${FAH_VERSION_MINOR}/fahclient_${FAH_VERSION_PATCH}_amd64.deb && \
@@ -19,8 +19,7 @@ RUN useradd -rm -b /home fah && \
 # Web viewer
 EXPOSE 7396
 
-USER fah
-
+USER 1000
 WORKDIR /home/fah
 
 ENV USER Anonymous
