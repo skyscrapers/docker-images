@@ -14,7 +14,7 @@ RUN useradd -rm -b /home fah && \
   dpkg --install /tmp/fah.deb && \
   apt-get remove -y curl && \
   apt-get autoremove -y && \
-  rm --recursive --verbose --force /tmp/* /var/log/* /var/lib/apt/
+  rm --recursive --verbose --force /tmp/* /var/log/* /var/lib/apt/lists/*
 
 # Web viewer
 EXPOSE 7396
