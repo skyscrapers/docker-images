@@ -1,0 +1,4 @@
+ARG KUBEAUDIT_BIN_PATH=kubeaudit
+FROM scratch
+COPY ${KUBEAUDIT_BIN_PATH} /
+ENTRYPOINT ["/kubeaudit"]
