@@ -1,4 +1,4 @@
 ARG KUBEAUDIT_BIN_PATH=kubeaudit
-FROM scratch
+FROM alpine:latest
 COPY ${KUBEAUDIT_BIN_PATH} /
 ENTRYPOINT ["/kubeaudit"]
