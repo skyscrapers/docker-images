@@ -37,9 +37,15 @@ This container is used to populate volumes from configmaps. Useful in Kubernetes
 
 Docker image containing the [aws-nuke](https://github.com/rebuy-de/aws-nuke) binary. Based on alpine.
 
-## fluent-bit-logzio
+## fluent-bit
 
-A [fluent-bit](https://github.com/fluent/fluent-bit) image including the [logzio-output plugin](https://github.com/logzio/fluent-bit-logzio-output).
+A [fluent-bit](https://github.com/fluent/fluent-bit) image including the [logzio-output](https://github.com/logzio/fluent-bit-logzio-output) and [grafana-loki](https://github.com/grafana/loki/tree/main/clients/cmd/fluent-bit) output plugins.
+
+You can control which versions are built via the following `ARG`s:
+
+```docker
+ARG FLB_VERSION=1.8.11-debug
+```
 
 ## kubectl
 
