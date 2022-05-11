@@ -16,9 +16,3 @@ RUN apk add --update --no-cache python3 && \
   pip3 install --upgrade pip && \
   pip3 install awscli && \
   pip3 cache purge
-
-# Install aws-iam-authenticator
-# https://github.com/alpine-docker/k8s/blob/master/Dockerfile
-RUN authenticator=$(aws --no-sign-request s3 ls s3://amazon-eks --recursive |grep aws-iam-authenticator$|grep amd64 |awk '{print $NF}' |sort -V|tail -1) && \
-  aws --no-sign-request s3 cp s3://amazon-eks/${authenticator} /usr/bin/aws-iam-authenticator && \
-  chmod +x /usr/bin/aws-iam-authenticator
