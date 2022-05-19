@@ -1,5 +1,4 @@
 ARG TF_VERSION=1.1.9
-ARG KUBECTL_VERSION=1.24.0
 
 FROM ljfranklin/terraform-resource:${TF_VERSION}
 
