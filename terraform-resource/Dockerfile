@@ -5,7 +5,7 @@ FROM ljfranklin/terraform-resource:${TF_VERSION}
 
 # Install kubectl (same version of aws esk)
 # https://github.com/alpine-docker/k8s/blob/master/Dockerfile
-RUN curl -sLO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
+RUN curl -sLO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
   mv kubectl /usr/bin/kubectl && \
   chmod +x /usr/bin/kubectl
 
