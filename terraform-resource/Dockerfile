@@ -2,9 +2,11 @@ ARG TF_VERSION=1.1.9
 
 FROM ljfranklin/terraform-resource:${TF_VERSION}
 
+ARG KUBECTL_VERSION=v1.22.10
+
 # Install kubectl (same version of aws esk)
 # https://github.com/alpine-docker/k8s/blob/master/Dockerfile
-RUN curl -sLO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+RUN curl -sLO "https://dl.k8s.io/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl" && \
   mv kubectl /usr/bin/kubectl && \
   chmod +x /usr/bin/kubectl
 
