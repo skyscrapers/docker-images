@@ -5,6 +5,8 @@ image_resource:
   type: registry-image
   source:
     repository: vito/oci-build-task
+    username: ((DOCKER_HUB_SKYSCRAPERS_CREDS.username))
+    password: ((DOCKER_HUB_SKYSCRAPERS_CREDS.password))
 
 inputs:
   - name: context
