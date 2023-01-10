@@ -4,7 +4,7 @@ platform: linux
 image_resource:
   type: registry-image
   source:
-    repository: vito/oci-build-task
+    repository: concourse/oci-build-task
     username: ((DOCKER_HUB_SKYSCRAPERS_CREDS.username))
     password: ((DOCKER_HUB_SKYSCRAPERS_CREDS.password))
 
@@ -14,6 +14,8 @@ inputs:
   - name: args
     path: args/
     optional: true
+  - name: docker_creds
+    optional: true
 
 outputs:
   - name: image
@@ -21,6 +23,7 @@ outputs:
 params:
   CONTEXT:
   BUILD_ARGS_FILE:
+  DOCKER_CONFIG:
 
 caches:
   - path: cache
