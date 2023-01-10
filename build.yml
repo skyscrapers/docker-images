@@ -14,7 +14,7 @@ inputs:
   - name: args
     path: args/
     optional: true
-  - name: docker_creds
+  - name: docker_config
     optional: true
 
 outputs:
