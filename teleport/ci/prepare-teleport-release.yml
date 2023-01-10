@@ -2,9 +2,11 @@
 platform: linux
 
 image_resource:
-  type: docker-image
+  type: registry-image
   source:
     repository: alpine
+    username: ((DOCKER_HUB_SKYSCRAPERS_CREDS.username))
+    password: ((DOCKER_HUB_SKYSCRAPERS_CREDS.password))
 
 inputs:
   - name: teleport-release
