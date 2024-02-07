@@ -39,12 +39,12 @@ Docker image containing the [aws-nuke](https://github.com/rebuy-de/aws-nuke) bin
 
 ## fluent-bit
 
-A [fluent-bit](https://github.com/fluent/fluent-bit) image including the [logzio-output](https://github.com/logzio/fluent-bit-logzio-output) and [grafana-loki](https://github.com/grafana/loki/tree/main/clients/cmd/fluent-bit) output plugins.
+A [fluent-bit](https://github.com/fluent/fluent-bit) image including the [logzio-output](https://github.com/logzio/fluent-bit-logzio-output) output plugin.
 
 You can control which versions are built via the following `ARG`s:
 
 ```docker
-ARG FLB_VERSION=1.8.11-debug
+ARG FLB_VERSION=2.2.1-debug
 ```
 
 ## kubectl
