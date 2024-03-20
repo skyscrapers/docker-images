@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/actions-runner
+  IMAGE_NAME: ${{ github.repository_owner }}/actions-runner
 
 jobs:
   build-latest:
