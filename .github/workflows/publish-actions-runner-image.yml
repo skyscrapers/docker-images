@@ -2,6 +2,8 @@ name: Publish Actions Runner Image
 
 on:
   push:
+    paths:
+      - 'actions-runner/**'
     branches:
       - master
 
@@ -33,3 +35,4 @@ jobs:
             linux/arm64
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           push: true
+          provenance: false
