@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'actions-runner/**'
+      - '.github/workflows/publish-actions-runner-image.yml'
     branches:
       - master
 
