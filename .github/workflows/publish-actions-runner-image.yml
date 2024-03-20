@@ -29,8 +29,8 @@ jobs:
       - name: Build and push the container to GitHub Container Registry using the latest tag
         uses: docker/build-push-action@v5.3.0
         with:
-          context: actions-runner
-          file: Dockerfile
+          context: .
+          file: actions-runner/Dockerfile
           platforms: |
             linux/amd64
             linux/arm64
