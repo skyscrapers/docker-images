@@ -6,6 +6,13 @@ Docker images. Each folder contains the setup for a single image.
 The Concourse pipeline to build all images can be found in the
 [skyscrapers/ci](https://github.com/skyscrapers/ci) repository.
 
+## actions-runner
+
+This is a Docker image based on the official GitHub Actions runner image. It is used to run GitHub Actions on a self-hosted runner in a Kubernetes cluster.
+Our layer adds our most used tools onto the official image.
+
+The image is build with GitHub actions and pushed to the `ghcr.io/skyscrapers/actions-runner` repository.
+
 ## packer g10k
 
 This is a Docker image containing the following tools:
