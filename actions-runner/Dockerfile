@@ -5,8 +5,8 @@ RUN apt-get update -y \
   git \
   curl \
   unzip \
-  ssh \
-  zip
+  zip \
+  ssh
 
 FROM ghcr.io/actions/actions-runner:latest
 
@@ -15,4 +15,5 @@ COPY --from=build /usr/bin/git /usr/bin/git
 COPY --from=build /usr/bin/curl /usr/bin/curl
 COPY --from=build /usr/bin/unzip /usr/bin/unzip
 COPY --from=build /usr/bin/zip /usr/bin/zip
+COPY --from=build /usr/bin/ssh* /usr/bin/
 COPY --from=build /usr/lib/ /usr/lib/
