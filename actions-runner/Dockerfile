@@ -5,6 +5,7 @@ RUN apt-get update -y \
   git \
   curl \
   unzip \
+  ssh \
   zip
 
 FROM ghcr.io/actions/actions-runner:latest
