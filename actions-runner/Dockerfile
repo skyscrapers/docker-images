@@ -1,4 +1,4 @@
-FROM amazon/aws-cli:2.2.36 AS aws-cli
+FROM amazon/aws-cli:latest AS aws-cli
 FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-jammy as build
 
 ARG DEBIAN_FRONTEND=noninteractive
