@@ -9,8 +9,10 @@ RUN apt-get update -y \
   curl \
   unzip \
   zip \
-  ssh \
-  awscli
+  ssh
+
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+  && mv kubectl /usr/bin/
 
 FROM ghcr.io/actions/actions-runner:latest
 
@@ -20,5 +22,5 @@ COPY --from=build /usr/bin/curl /usr/bin/curl
 COPY --from=build /usr/bin/unzip /usr/bin/unzip
 COPY --from=build /usr/bin/zip /usr/bin/zip
 COPY --from=build /usr/bin/ssh* /usr/bin/
-COPY --from=build /usr/bin/aws /usr/bin/aws
+COPY --from=build /usr/bin/kubectl /usr/bin/kubectl
 COPY --from=build /usr/lib/ /usr/lib/
