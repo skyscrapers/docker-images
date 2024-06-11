@@ -3,7 +3,6 @@ FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-jammy as build
 ARG TARGETOS
 ARG TARGETARCH
 ARG DEBIAN_FRONTEND=noninteractive
-
 USER root
 
 RUN apt-get update -y \
