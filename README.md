@@ -36,6 +36,17 @@ This is a Docker image for [Teleport](https://gravitational.com/teleport/)
 
 This will build a Teleport image from the Debian base image. This Dockerfile expects the released Teleport binaries in `teleport/teleport` folder.
 
+## Terragrunt
+
+This is a Docker image that contains all the tools needed to run Terragrunt in Skyscrapers:
+
+* [AWS CLI](https://aws.amazon.com/cli/)
+* [Helm](https://helm.sh/)
+* [Kubectl](https://kubernetes.io/docs/reference/kubectl/overview/)
+* [OpenTofu](https://github.com/opentofu/opentofu)
+* [Sops](https://github.com/mozilla/sops)
+* [Terragrunt](https://terragrunt.gruntwork.io/)
+
 ## volume-populator
 
 This container is used to populate volumes from configmaps. Useful in Kubernetes as an init container to populate a volume with data before the application starts.
