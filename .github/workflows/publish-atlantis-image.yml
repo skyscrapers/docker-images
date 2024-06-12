@@ -1,0 +1,70 @@
+name: Publish Atlantis Image
+
+on:
+  push:
+    paths:
+      - "atlantis/**"
+      - ".github/workflows/publish-atlantis-image.yml"
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 * * *" # Run every day at midnight
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/atlantis
+
+jobs:
+  build-latest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up QEMU #emulation support with QEMU to be able to build against more platforms.
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Fetch latest release from upstream
+        id: fetch_release
+        run: |
+          latest_release=$(curl --silent "https://api.github.com/repos/runatlantis/atlantis/releases/latest" | jq -r .tag_name)
+          echo "Latest upstream release: $latest_release"
+          echo "::set-output name=upstream_release::$latest_release"
+      - name: Get the latest release from our repository
+        id: get_current_release
+        run: |
+          latest_tag=$(curl --silent -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://ghcr.io/v2/skyscrapers/atlantis/tags/list" | jq -r '.tags[]' | grep -v latest | sort -rV | head -n 1)
+          echo "Current release: $latest_tag"
+          echo "::set-output name=current_release::$latest_tag"
+      - name: Compare releases
+        id: compare_releases
+        run: |
+          if [ "${{ steps.fetch_release.outputs.upstream_release }}" != "${{ steps.get_current_release.outputs.current_release }}" ]; then
+            echo "New release found: ${{ steps.fetch_release.outputs.upstream_release }}"
+            echo "::set-output name=new_release::true"
+          else
+            echo "No new release found"
+            echo "::set-output name=new_release::false"
+          fi
+      - name: Build and push the container to GitHub Container Registry using the latest tag
+        if: steps.compare_releases.outputs.new_release == 'true'
+        uses: docker/build-push-action@v5.3.0
+        with:
+          context: .
+          file: atlantis/Dockerfile
+          build-args: |
+            ATLANTIS_VERSION=${{ steps.fetch_release.outputs.upstream_release }}
+          platforms: |
+            linux/amd64
+            linux/arm64
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.fetch_release.outputs.upstream_release }}
+          push: true
+          provenance: false

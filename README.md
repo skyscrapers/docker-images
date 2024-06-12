@@ -13,6 +13,10 @@ Our layer adds our most used tools onto the official image.
 
 The image is build with GitHub actions and pushed to the `ghcr.io/skyscrapers/actions-runner` repository.
 
+## Atlantis
+
+This is a Docker image for [Atlantis](https://www.runatlantis.io/). We put our layer on top of the official Atlantis image that inludes our tools from our Terragrunt image.
+
 ## packer g10k
 
 This is a Docker image containing the following tools:
