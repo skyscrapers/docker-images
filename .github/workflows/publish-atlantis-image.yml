@@ -39,7 +39,7 @@ jobs:
       - name: Get the latest release from our repository
         id: get_current_release
         run: |
-          latest_tag=$(curl --silent -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://ghcr.io/v2/skyscrapers/atlantis/tags/list" | jq -r '.tags[]' | grep -v latest | sort -rV | head -n 1)
+          latest_tag=$(curl --silent -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/orgs/skyscrapers/packages/container/atlantis/versions" | jq -r '.[0].metadata.container.tags[]' | grep -v latest | sort -rV | head -n 1)
           echo "Current release: $latest_tag"
           echo "::set-output name=current_release::$latest_tag"
       - name: Compare releases
