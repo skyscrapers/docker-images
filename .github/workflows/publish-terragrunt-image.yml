@@ -52,6 +52,12 @@ jobs:
             echo "No new release found"
             echo "::set-output name=new_release::false"
           fi
+      - name: Strip leading 'v' from release version
+        id: strip_v
+        run: |
+          version=${{ steps.fetch_release.outputs.upstream_release }}
+          stripped_version=${version#v}
+          echo "::set-output name=stripped_version::$stripped_version"
       - name: Build and push the container to GitHub Container Registry using the latest tag
         if: steps.compare_releases.outputs.new_release == 'true'  || github.event_name == 'push'
         uses: docker/build-push-action@v5.3.0
@@ -62,7 +68,7 @@ jobs:
             linux/amd64
             linux/arm64
           build-args: |
-            TOFU_VERSION=${{ steps.fetch_release.outputs.upstream_release#v }}
+            TOFU_VERSION=${{ steps.strip_v.outputs.stripped_version }}
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:opentofu_${{ steps.fetch_release.outputs.upstream_release }}
