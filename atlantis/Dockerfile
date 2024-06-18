@@ -3,9 +3,9 @@ FROM ghcr.io/runatlantis/atlantis:${ATLANTIS_VERSION}
 
 USER root
 
-COPY --from=ghcr.io/skyscrapers/terragrunt:latest /usr/local/bin/sops /usr/local/bin/sops
-COPY --from=ghcr.io/skyscrapers/terragrunt:latest /usr/local/bin/tofu /usr/local/bin/tofu
-COPY --from=ghcr.io/skyscrapers/terragrunt:latest /usr/local/bin/terragrunt /usr/local/bin/terragrunt
+COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.6.2 /usr/local/bin/sops /usr/local/bin/sops
+COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.6.2 /usr/local/bin/tofu /usr/local/bin/tofu
+COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.6.2 /usr/local/bin/terragrunt /usr/local/bin/terragrunt
 
 # Note: when atlantis moves to Alpine 3.20 update yq to yq-go: https://wiki.alpinelinux.org/wiki/Release_Notes_for_Alpine_3.20.0#yq
 RUN apk update && \
