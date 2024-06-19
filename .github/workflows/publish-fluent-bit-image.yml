@@ -71,6 +71,6 @@ jobs:
             linux/arm64
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.fetch_release.outputs.upstream_release }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.strip_v.outputs.stripped_version }}
           push: true
           provenance: false
