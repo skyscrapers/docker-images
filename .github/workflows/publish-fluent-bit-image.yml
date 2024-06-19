@@ -62,7 +62,7 @@ jobs:
         if: steps.compare_releases.outputs.new_release == 'true'  || github.event_name == 'push'
         uses: docker/build-push-action@v5.3.0
         with:
-          context: fluent-bit/
+          context: "{{defaultContext}}:fluent-bit"
           file: Dockerfile
           build-args: |
             FLB_VERSION=${{ steps.strip_v.outputs.stripped_version }}
