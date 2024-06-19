@@ -1,8 +1,6 @@
 FROM alpine:latest
 
-RUN apk -v --update add python3 py-pip jq && \
-  pip install --upgrade yq && \
-  apk -v --purge del py-pip && \
+RUN apk -v --update add jq yq && \
   rm /var/cache/apk/*
 
 ENTRYPOINT ["yq"]
