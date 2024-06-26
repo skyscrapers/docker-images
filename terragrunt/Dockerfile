@@ -8,7 +8,6 @@ FROM ghcr.io/opentofu/opentofu:${TOFU_VERSION} as tofu
 
 FROM alpine:${ALPINE_VERSION} as build
 
-ARG TARGETARCH=arm64
 ARG TERRAGRUNT_VERSION=v0.58.6
 ARG KUBECTL_VERSION=v1.30.0
 ARG HELM_VERSION=v3.15.1
@@ -17,7 +16,7 @@ RUN apk update && \
   apk add curl ca-certificates
 
 RUN curl -L \
-  https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -o terragrunt && \
+  https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_${TARGETARCH} -o terragrunt && \
   chmod +x terragrunt && \
   mv terragrunt /usr/local/bin/
 RUN terragrunt --version
