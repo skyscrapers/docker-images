@@ -38,7 +38,7 @@ RUN curl -LO https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz
 FROM alpine:${ALPINE_VERSION}
 
 RUN apk update && \
-  apk add aws-cli jq yq-go git
+  apk add aws-cli jq yq-go git bash
 RUN aws --version
 
 COPY --from=sops /usr/local/bin/sops /usr/local/bin/sops
