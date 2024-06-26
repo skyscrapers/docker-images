@@ -1,7 +1,5 @@
 FROM alpine:latest
-
-# This is the release of spruce to pull in.
-ARG SPRUCE_VERSION=v1.26.0
+ARG SPRUCE_VERSION
 
 RUN apk add -v --update bash curl python3 ca-certificates jq  yq-python coreutils && \
   yq --version
