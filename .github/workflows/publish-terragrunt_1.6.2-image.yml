@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - "terragrunt/**"
-      - ".github/workflows/publish-terragrunt-image.yml"
+      - ".github/workflows/publish-terragrunt_1.6.2-image.yml"
     branches:
       - master
 
