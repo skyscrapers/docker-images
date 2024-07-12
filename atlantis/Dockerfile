@@ -1,6 +1,8 @@
 ARG ATLANTIS_VERSION=v0.28.1
 FROM ghcr.io/runatlantis/atlantis:${ATLANTIS_VERSION}
 
+ARG TARGETARCH
+
 USER root
 
 COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.6.2 /usr/local/bin/sops /usr/local/bin/sops
