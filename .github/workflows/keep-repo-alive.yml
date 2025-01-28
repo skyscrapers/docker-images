@@ -21,6 +21,3 @@ jobs:
         run: |
           git tag -f keepalive
           git push origin --tags --force
-
-      - name: List tags
-        run: git tag
