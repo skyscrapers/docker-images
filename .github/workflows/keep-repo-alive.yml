@@ -1,9 +1,6 @@
 name: Keep Repository Active with a Fixed Tag
 
 on:
-  push:
-    branches:
-      - change-1321
   schedule:
     - cron: '0 0 */59 * *'
 
