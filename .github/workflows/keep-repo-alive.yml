@@ -1,0 +1,23 @@
+name: Keep Repository Active with a Fixed Tag
+
+on:
+  schedule:
+    - cron: '0 0 */59 * *'
+
+jobs:
+  update-tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create or update tag
+        run: |
+          git tag -f keepalive
+          git push origin --tags --force
