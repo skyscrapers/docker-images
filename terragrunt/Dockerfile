@@ -1,7 +1,7 @@
 # Versions
 ARG ALPINE_VERSION=3.20
 ARG TOFU_VERSION=1.6.2
-ARG SOPS_VERSION=v3.8.1
+ARG SOPS_VERSION=v3.9.4
 
 FROM ghcr.io/getsops/sops:${SOPS_VERSION}-alpine as sops
 FROM ghcr.io/opentofu/opentofu:${TOFU_VERSION} as tofu
