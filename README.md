@@ -17,6 +17,10 @@ The image is build with GitHub actions and pushed to the `ghcr.io/skyscrapers/ac
 
 This is a Docker image for [Atlantis](https://www.runatlantis.io/). We put our layer on top of the official Atlantis image that inludes our tools from our Terragrunt image.
 
+## Inotify-tools
+
+This is an Alpine based Docker image with the `inotify-tools` package installed.
+
 ## Terragrunt
 
 This is a Docker image that contains all the tools needed to run Terragrunt in Skyscrapers:
