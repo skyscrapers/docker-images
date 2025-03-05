@@ -12,8 +12,7 @@ ARG TERRAGRUNT_VERSION=v0.73.6
 ARG KUBECTL_VERSION=v1.30.0
 ARG HELM_VERSION=v3.15.1
 
-RUN apk update && \
-  apk add curl ca-certificates
+RUN apk add --update --no-cache curl ca-certificates
 
 RUN curl -L \
   https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_${TARGETARCH} -o terragrunt && \
@@ -36,8 +35,7 @@ RUN curl -LO https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz
 
 FROM alpine:${ALPINE_VERSION}
 
-RUN apk update && \
-  apk add aws-cli jq yq-go git bash
+RUN apk add --update --no-cache aws-cli bash git jq openssh yq-go
 RUN aws --version
 
 COPY --from=sops /usr/local/bin/sops /usr/local/bin/sops
