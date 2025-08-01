@@ -2,7 +2,7 @@ name: Keep Repository Active with a Fixed Tag
 
 on:
   schedule:
-    - cron: '0 0 */59 * *'
+    - cron: '0 0 */14 * *'
 
 jobs:
   update-tag:
