@@ -33,7 +33,7 @@ RUN export RUNNER_ARCH="${TARGETARCH}" && \
   find /usr/local/aws-cli/v2/current/dist/awscli/botocore/data -name examples-1.json -delete
 
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
-  && chmod +x kubectl && mv kubectl /usr/bin/
+  && chmod +x kubectl && mv kubectl /usr/bin/ 
 
 FROM ghcr.io/actions/actions-runner:latest
 
