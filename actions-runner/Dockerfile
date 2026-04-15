@@ -1,18 +1,19 @@
-FROM mcr.microsoft.com/dotnet/runtime-deps:8.0-noble AS build
+FROM ghcr.io/actions/actions-runner:latest
 
-ARG TARGETOS
+ARG TARGETOS=linux
 ARG TARGETARCH
 ARG DEBIAN_FRONTEND=noninteractive
 USER root
 
 RUN apt-get update -y \
-  && apt-get install -y \
+  && apt-get install -y --no-install-recommends \
   jq \
   git \
   curl \
   unzip \
   zip \
-  ssh
+  openssh-client \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN export RUNNER_ARCH="${TARGETARCH}" && \
   if [ "${RUNNER_ARCH}" = "amd64" ]; then export AWS_ARCH="x86_64" ; fi && \
@@ -26,25 +27,19 @@ RUN export RUNNER_ARCH="${TARGETARCH}" && \
   unzip -qq awscliv2.zip && \
   ./aws/install && \
   rm -rf \
+  awscliv2.zip \
+  aws/ \
   /usr/local/aws-cli/v2/current/dist/aws_completer \
   /usr/local/bin/aws_completer \
   /usr/local/aws-cli/v2/current/dist/awscli/data/ac.index \
   /usr/local/aws-cli/v2/current/dist/awscli/examples && \
   find /usr/local/aws-cli/v2/current/dist/awscli/botocore/data -name examples-1.json -delete
 
-RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
-  && chmod +x kubectl && mv kubectl /usr/bin/ 
-
-FROM ghcr.io/actions/actions-runner:latest
-
-COPY --from=build /usr/bin/jq /usr/bin/jq
-COPY --from=build /usr/bin/git /usr/bin/git
-COPY --from=build /usr/bin/curl /usr/bin/curl
-COPY --from=build /usr/bin/unzip /usr/bin/unzip
-COPY --from=build /usr/bin/zip /usr/bin/zip
-COPY --from=build /usr/bin/ssh* /usr/bin/
-COPY --from=build /usr/local/aws-cli/ /usr/local/aws-cli/
-COPY --from=build /usr/local/bin/ /usr/local/bin/
-COPY --from=build /usr/bin/kubectl /usr/bin/kubectl
-COPY --from=build /usr/lib/ /usr/lib/
-COPY --from=build /lib/ /lib/
+RUN curl \
+  --fail \
+  --silent \
+  --location \
+  --output kubectl \
+  "https://dl.k8s.io/release/$(curl -fsSL https://dl.k8s.io/release/stable.txt)/bin/linux/${TARGETARCH}/kubectl" \
+  && chmod +x kubectl \
+  && mv kubectl /usr/bin/kubectl
