@@ -9,7 +9,7 @@ on:
       - master
   schedule:
     - cron: "0 0 * * *" # Run every day at midnight
-
+  workflow_dispatch:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/atlantis
