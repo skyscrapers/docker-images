@@ -21,10 +21,6 @@ This is a Docker image for [Atlantis](https://www.runatlantis.io/). We put our l
 
 This is a Docker image that contains the `aws-cli` and `kubectl` tools to assign Elastic IPs to EC2 instances.
 
-## Inotify-tools
-
-This is an Alpine based Docker image with the `inotify-tools` package installed.
-
 ## Terragrunt
 
 This is a Docker image that contains all the tools needed to run Terragrunt in Skyscrapers:
