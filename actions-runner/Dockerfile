@@ -15,6 +15,7 @@ RUN apt-get update -y \
   unzip \
   zip \
   openssh-client \
+  libatomic1 \
   && rm -rf /var/lib/apt/lists/*
 
 RUN export RUNNER_ARCH="${TARGETARCH}" && \
