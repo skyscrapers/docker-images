@@ -15,6 +15,8 @@ RUN apt-get update -y \
   unzip \
   zip \
   openssh-client \
+  # Node.js >= 24 binaries dynamically link libatomic.so.1, see
+  # https://github.com/nodejs/node/issues/60790
   libatomic1 \
   && rm -rf /var/lib/apt/lists/*
 
