@@ -9,32 +9,26 @@ COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.11.3 /usr/local/bin/sops 
 COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.11.3 /usr/local/bin/tofu /usr/local/bin/tofu
 COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.11.3 /usr/local/bin/terragrunt /usr/local/bin/terragrunt
 
-# Note: when atlantis moves to Alpine 3.20 update yq to yq-go: https://wiki.alpinelinux.org/wiki/Release_Notes_for_Alpine_3.20.0#yq
+# yq-go (mikefarah) explicitly: the Atlantis pre-workflow hook uses its expression syntax
 RUN apk update && \
-  apk add aws-cli jq yq git
+  apk add aws-cli jq yq-go git
 
-# terragrunt-atlantis-config generates a per-repo atlantis.yaml whose autoplan
-# when_modified lists resolved terragrunt dependencies and module sources, so a
-# change to a consumed module or an upstream stack autoplans its dependents
-# (skyscrapers/platform#2146). Verified against the release checksums.txt; the
-# install step selects the artifact per TARGETARCH (our runners are arm64).
-ARG TERRAGRUNT_ATLANTIS_CONFIG_VERSION=1.20.0
-RUN set -eux; \
+# terragrunt-atlantis-config generates the atlantis.yaml that makes module and dependency
+# changes autoplan their consumers (skyscrapers/platform#2146). Releases ship raw binaries
+# per arch; digests pinned from the release SHA256SUMS.
+ARG TERRAGRUNT_ATLANTIS_CONFIG_VERSION=1.21.1
+ARG TERRAGRUNT_ATLANTIS_CONFIG_SHA256_AMD64=1303113ca64edff78f0861d53eea680552bf79729b3ec605f1f4ed8b81b5a37b
+ARG TERRAGRUNT_ATLANTIS_CONFIG_SHA256_ARM64=12f7fa57bc4db0526387436e5fa800ac0f3614e30a692fb5ba08e705f21d9195
+RUN set -eu; \
   case "${TARGETARCH}" in \
-    amd64) tac_arch=amd64 ;; \
-    arm64) tac_arch=arm64 ;; \
+    amd64) sha="${TERRAGRUNT_ATLANTIS_CONFIG_SHA256_AMD64}" ;; \
+    arm64) sha="${TERRAGRUNT_ATLANTIS_CONFIG_SHA256_ARM64}" ;; \
     *) echo "unsupported TARGETARCH ${TARGETARCH}" >&2; exit 1 ;; \
   esac; \
-  cd /tmp; \
-  base="https://github.com/transcend-io/terragrunt-atlantis-config/releases/download/v${TERRAGRUNT_ATLANTIS_CONFIG_VERSION}"; \
-  tarball="terragrunt-atlantis-config_${TERRAGRUNT_ATLANTIS_CONFIG_VERSION}_linux_${tac_arch}.tar.gz"; \
-  checksums="terragrunt-atlantis-config_${TERRAGRUNT_ATLANTIS_CONFIG_VERSION}_checksums.txt"; \
-  wget -q "${base}/${tarball}"; \
-  wget -q "${base}/${checksums}"; \
-  grep " ${tarball}\$" "${checksums}" | sha256sum -c -; \
-  tar -xzf "${tarball}"; \
-  install -m 0755 "$(find . -type f -name terragrunt-atlantis-config | head -n1)" /usr/local/bin/terragrunt-atlantis-config; \
-  rm -rf "/tmp/${tarball}" "/tmp/${checksums}" "/tmp/terragrunt-atlantis-config_${TERRAGRUNT_ATLANTIS_CONFIG_VERSION}"*
+  wget -qO /usr/local/bin/terragrunt-atlantis-config \
+    "https://github.com/transcend-io/terragrunt-atlantis-config/releases/download/v${TERRAGRUNT_ATLANTIS_CONFIG_VERSION}/terragrunt-atlantis-config_${TERRAGRUNT_ATLANTIS_CONFIG_VERSION}_linux_${TARGETARCH}"; \
+  echo "${sha}  /usr/local/bin/terragrunt-atlantis-config" | sha256sum -c -; \
+  chmod 0755 /usr/local/bin/terragrunt-atlantis-config
 
 RUN aws --version && \
   terragrunt --version && \
