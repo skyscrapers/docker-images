@@ -59,6 +59,7 @@ jobs:
           stripped_version=${version#v}
           echo "::set-output name=stripped_version::$stripped_version"
       - name: Build and push the container to GitHub Container Registry using the latest tag
+        id: build
         if: steps.compare_releases.outputs.new_release == 'true'  || github.event_name == 'push'
         uses: docker/build-push-action@v5.3.0
         with:
@@ -74,3 +75,13 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:opentofu_${{ steps.fetch_release.outputs.upstream_release }}
           push: true
           provenance: false
+      - name: Record the published digest
+        if: steps.build.outcome == 'success'
+        run: |
+          {
+            echo "## ghcr.io/skyscrapers/terragrunt"
+            echo
+            echo "Tag: \`opentofu_${{ steps.fetch_release.outputs.upstream_release }}\`"
+            echo
+            echo "Digest: \`${{ steps.build.outputs.digest }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"
