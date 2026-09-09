@@ -1,5 +1,5 @@
 # Versions
-ARG ALPINE_VERSION=3.20
+ARG ALPINE_VERSION=3.23
 ARG TOFU_VERSION=1.6.2
 ARG SOPS_VERSION=v3.9.4
 
@@ -35,8 +35,11 @@ RUN curl -LO https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz
 
 FROM alpine:${ALPINE_VERSION}
 
-RUN apk add --update --no-cache aws-cli bash git jq openssh yq-go
+RUN apk add --update --no-cache aws-cli bash ca-certificates coreutils curl git jq openssh openssl yq-go
 RUN aws --version
+
+RUN addgroup -g 1000 terragrunt && \
+  adduser -u 1000 -G terragrunt -h /home/terragrunt -s /bin/sh -D terragrunt
 
 COPY --from=sops /usr/local/bin/sops /usr/local/bin/sops
 COPY --from=tofu /usr/local/bin/tofu /usr/local/bin/tofu

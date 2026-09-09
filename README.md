@@ -31,6 +31,11 @@ This is a Docker image that contains all the tools needed to run Terragrunt in S
 * [OpenTofu](https://github.com/opentofu/opentofu)
 * [Sops](https://github.com/mozilla/sops)
 * [Terragrunt](https://terragrunt.gruntwork.io/)
+* `git`, `jq`, `yq` (mikefarah), `curl`, `openssl`, `coreutils`, `bash`, `openssh`
+
+It is published multi-arch (`linux/amd64`, `linux/arm64`) as `ghcr.io/skyscrapers/terragrunt:opentofu_<version>` and `:latest`, rebuilt daily when OpenTofu releases (the tags are mutable; pin by digest where it matters).
+
+The image carries a non-root user `terragrunt` (UID and GID 1000, home `/home/terragrunt`); the default user is root.
 
 ## fluent-bit
 
