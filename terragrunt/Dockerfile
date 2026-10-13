@@ -14,20 +14,22 @@ ARG HELM_VERSION=v3.15.1
 
 RUN apk add --update --no-cache curl ca-certificates
 
-RUN curl -L \
-  https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_${TARGETARCH} -o terragrunt && \
-  chmod +x terragrunt && \
-  mv terragrunt /usr/local/bin/
+RUN curl -fsSLO https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_${TARGETARCH} && \
+  curl -fsSLO https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/SHA256SUMS && \
+  grep " terragrunt_linux_${TARGETARCH}$" SHA256SUMS > terragrunt.sha256 && \
+  sha256sum -c terragrunt.sha256 && \
+  chmod +x terragrunt_linux_${TARGETARCH} && \
+  mv terragrunt_linux_${TARGETARCH} /usr/local/bin/terragrunt
 RUN terragrunt --version
 
-RUN curl -L -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl && \
-  curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl.sha256" && \
+RUN curl -fsSL -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl && \
+  curl -fsSLO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl.sha256" && \
   echo "$(cat kubectl.sha256)  kubectl" | sha256sum -c && \
   chmod +x kubectl && \
   mv kubectl /usr/local/bin/kubectl
 
-RUN curl -LO https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz && \
-  curl -LO https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz.sha256sum && \
+RUN curl -fsSLO https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz && \
+  curl -fsSLO https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz.sha256sum && \
   sha256sum -c helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz.sha256sum && \
   tar -xvzf helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz && \
   chmod +x linux-${TARGETARCH}/helm && \

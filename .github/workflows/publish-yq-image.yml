@@ -17,19 +17,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - name: Set up QEMU #emulation support with QEMU to be able to build against more platforms.
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3.7.0
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push the container to GitHub Container Registry using the latest tag
-        uses: docker/build-push-action@v5.3.0
+        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
         with:
           context: .
           file: yq/Dockerfile
@@ -40,3 +40,23 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           push: true
           provenance: false
+
+  # Runs in its own job so the webhook secret never shares a runner with the
+  # build. The `slack` environment only releases it to master.
+  notify:
+    needs: build-latest
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    environment: slack
+    permissions: {}
+    steps:
+      - name: Notify Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          TEXT: >-
+            ${{ needs.build-latest.result == 'success' && ':white_check_mark: Published' || ':x: Failed to build' }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            (<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|run>)
+        run: |
+          jq -n --arg text "$TEXT" '{text: $text}' |
+            curl -fsS -X POST -H 'Content-Type: application/json' --data @- "$SLACK_WEBHOOK_URL"

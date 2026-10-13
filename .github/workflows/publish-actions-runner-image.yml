@@ -23,47 +23,62 @@ concurrency:
 jobs:
   build-latest:
     runs-on: ubuntu-latest
+    outputs:
+      published: ${{ steps.promote.outcome == 'success' }}
+      tag: ${{ steps.fetch_release.outputs.upstream_release }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - name: Set up QEMU #emulation support with QEMU to be able to build against more platforms.
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3.7.0
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      # gh api authenticates with GITHUB_TOKEN (no shared per-IP rate limit) and
+      # exits non-zero on HTTP errors, so it is never piped. The regex guard
+      # fails the job instead of building a bogus tag such as `null`.
       - name: Fetch latest release from upstream
         id: fetch_release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          latest_release=$(curl --silent "https://api.github.com/repos/actions/runner/releases/latest" | jq -r .tag_name)
+          latest_release=$(gh api repos/actions/runner/releases/latest --jq .tag_name)
           echo "Latest upstream release: $latest_release"
-          echo "::set-output name=upstream_release::$latest_release"
+          [[ "$latest_release" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          echo "upstream_release=$latest_release" >> "$GITHUB_OUTPUT"
       - name: Get the latest release from our repository
         id: get_current_release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          latest_tag=$(curl --silent -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/orgs/skyscrapers/packages/container/actions-runner/versions" | jq -r '.[0].metadata.container.tags[]' | grep -v latest | sort -rV | head -n 1)
+          tags=$(gh api /orgs/skyscrapers/packages/container/actions-runner/versions --jq '.[0].metadata.container.tags[]')
+          latest_tag=$(echo "$tags" | grep -v latest | sort -rV | head -n 1)
           echo "Current release: $latest_tag"
-          echo "::set-output name=current_release::$latest_tag"
+          echo "current_release=$latest_tag" >> "$GITHUB_OUTPUT"
       - name: Compare releases
         id: compare_releases
+        env:
+          UPSTREAM_RELEASE: ${{ steps.fetch_release.outputs.upstream_release }}
+          CURRENT_RELEASE: ${{ steps.get_current_release.outputs.current_release }}
         run: |
-          if [ "${{ steps.fetch_release.outputs.upstream_release }}" != "${{ steps.get_current_release.outputs.current_release }}" ]; then
-            echo "New release found: ${{ steps.fetch_release.outputs.upstream_release }}"
-            echo "::set-output name=new_release::true"
+          if [ "$UPSTREAM_RELEASE" != "$CURRENT_RELEASE" ]; then
+            echo "New release found: $UPSTREAM_RELEASE"
+            echo "new_release=true" >> "$GITHUB_OUTPUT"
           else
             echo "No new release found"
-            echo "::set-output name=new_release::false"
+            echo "new_release=false" >> "$GITHUB_OUTPUT"
           fi
       # Push a verification candidate first; it is promoted to the release tags
       # only after every platform is confirmed runnable (see below). Runners
       # consume :latest / the version tag, never :staging.
       - name: Build and push the verification candidate
         if: steps.compare_releases.outputs.new_release == 'true'  || github.event_name == 'push'
-        uses: docker/build-push-action@v5.3.0
+        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
         with:
           context: .
           file: actions-runner/Dockerfile
@@ -111,10 +126,33 @@ jobs:
 
       # Re-tag the verified manifest list (no rebuild) to the tags runners use.
       - name: Promote verified image to release tags
+        id: promote
         if: steps.compare_releases.outputs.new_release == 'true'  || github.event_name == 'push'
+        env:
+          UPSTREAM_RELEASE: ${{ steps.fetch_release.outputs.upstream_release }}
         run: |
           set -euo pipefail
           docker buildx imagetools create \
             --tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" \
-            --tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.fetch_release.outputs.upstream_release }}" \
+            --tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${UPSTREAM_RELEASE}" \
             "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:staging"
+
+  # Runs in its own job so the webhook secret never shares a runner with the
+  # build. The `slack` environment only releases it to master.
+  notify:
+    needs: build-latest
+    if: always() && (needs.build-latest.result == 'failure' || needs.build-latest.outputs.published == 'true')
+    runs-on: ubuntu-latest
+    environment: slack
+    permissions: {}
+    steps:
+      - name: Notify Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          TEXT: >-
+            ${{ needs.build-latest.result == 'success' && ':white_check_mark: Published' || ':x: Failed to build' }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build-latest.outputs.tag || 'latest' }}
+            (<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|run>)
+        run: |
+          jq -n --arg text "$TEXT" '{text: $text}' |
+            curl -fsS -X POST -H 'Content-Type: application/json' --data @- "$SLACK_WEBHOOK_URL"
