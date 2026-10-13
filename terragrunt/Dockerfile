@@ -1,16 +1,16 @@
 # Versions
 ARG ALPINE_VERSION=3.23
 ARG TOFU_VERSION=1.6.2
-ARG SOPS_VERSION=v3.9.4
+ARG SOPS_VERSION=v3.13.3
 
 FROM ghcr.io/getsops/sops:${SOPS_VERSION}-alpine as sops
 FROM ghcr.io/opentofu/opentofu:${TOFU_VERSION}-minimal as tofu
 FROM alpine:${ALPINE_VERSION} as build
 
 ARG TARGETARCH
-ARG TERRAGRUNT_VERSION=v0.73.6
-ARG KUBECTL_VERSION=v1.30.0
-ARG HELM_VERSION=v3.15.1
+ARG TERRAGRUNT_VERSION=v1.1.6
+ARG KUBECTL_VERSION=v1.37.1
+ARG HELM_VERSION=v4.3.0
 
 RUN apk add --update --no-cache curl ca-certificates
 
