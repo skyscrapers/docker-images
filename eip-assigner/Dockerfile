@@ -1,5 +1,5 @@
 # Versions
-ARG ALPINE_VERSION=3.20
+ARG ALPINE_VERSION=3.23
 ARG TARGETARCH
 
 FROM ghcr.io/skyscrapers/terragrunt as source
