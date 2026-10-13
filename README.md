@@ -37,20 +37,6 @@ It is published multi-arch (`linux/amd64`, `linux/arm64`) as `ghcr.io/skyscraper
 
 The image carries a non-root user `terragrunt` (UID and GID 1000, home `/home/terragrunt`); the default user is root.
 
-## fluent-bit
-
-A [fluent-bit](https://github.com/fluent/fluent-bit) image including the [logzio-output](https://github.com/logzio/fluent-bit-logzio-output) output plugin.
-
-You can control which versions are built via the following `ARG`s:
-
-```docker
-ARG FLB_VERSION=2.2.1-debug
-```
-
 ## yq
 
 Alpine based docker image with [`yq`](https://github.com/kislyuk/yq) and [`jq`](https://stedolan.github.io/jq/) tools pre-installed.
-
-## spruce
-
-Alpine based docker image [Spruce](https://github.com/geofffranks/spruce) pre-installed.
