@@ -5,9 +5,9 @@ ARG TARGETARCH
 
 USER root
 
-COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.11.3 /usr/local/bin/sops /usr/local/bin/sops
-COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.11.3 /usr/local/bin/tofu /usr/local/bin/tofu
-COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.11.3 /usr/local/bin/terragrunt /usr/local/bin/terragrunt
+COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.13.1 /usr/local/bin/sops /usr/local/bin/sops
+COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.13.1 /usr/local/bin/tofu /usr/local/bin/tofu
+COPY --from=ghcr.io/skyscrapers/terragrunt:opentofu_v1.13.1 /usr/local/bin/terragrunt /usr/local/bin/terragrunt
 
 # yq-go (mikefarah) explicitly: the Atlantis pre-workflow hook uses its expression syntax
 RUN apk update && \
