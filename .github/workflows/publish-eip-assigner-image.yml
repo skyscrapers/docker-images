@@ -14,9 +14,14 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/eip-assigner
 
+permissions: {}
+
 jobs:
   build-latest:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # actions/checkout
+      packages: write # push the image to GHCR and read its tags
     steps:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0

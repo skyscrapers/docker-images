@@ -14,9 +14,14 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/terragrunt
 
+permissions: {}
+
 jobs:
   build-latest:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # actions/checkout
+      packages: write # push the image to GHCR and read its tags
     outputs:
       published: ${{ steps.build.outcome == 'success' }}
       tag: ${{ steps.fetch_release.outputs.upstream_release && format('opentofu_{0}', steps.fetch_release.outputs.upstream_release) }}

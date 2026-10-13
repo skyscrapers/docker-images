@@ -20,9 +20,14 @@ concurrency:
   group: publish-actions-runner-image
   cancel-in-progress: false
 
+permissions: {}
+
 jobs:
   build-latest:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # actions/checkout
+      packages: write # push the image to GHCR and read its tags
     outputs:
       published: ${{ steps.promote.outcome == 'success' }}
       tag: ${{ steps.fetch_release.outputs.upstream_release }}
