@@ -36,7 +36,3 @@ This is a Docker image that contains all the tools needed to run Terragrunt in S
 It is published multi-arch (`linux/amd64`, `linux/arm64`) as `ghcr.io/skyscrapers/terragrunt:opentofu_<version>` and `:latest`, rebuilt daily when OpenTofu releases (the tags are mutable; pin by digest where it matters).
 
 The image carries a non-root user `terragrunt` (UID and GID 1000, home `/home/terragrunt`); the default user is root.
-
-## yq
-
-Alpine based docker image with [`yq`](https://github.com/kislyuk/yq) and [`jq`](https://stedolan.github.io/jq/) tools pre-installed.
